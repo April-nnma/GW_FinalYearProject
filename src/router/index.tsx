@@ -1,6 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import { PATH } from "constant";
-import { Login } from "components";
+// import {} from "components";
+import { Register, Login } from "pages";
 
 export const router: RouteObject[] = [
   {
@@ -8,9 +9,11 @@ export const router: RouteObject[] = [
     children: [
       {
         path: PATH.login,
+        element: <Login />,
       },
       {
         path: PATH.register,
+        element: <Register />,
       },
     ],
   },
