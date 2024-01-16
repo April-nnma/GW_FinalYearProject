@@ -4,7 +4,7 @@ import { Login } from "components";
 
 export const router: RouteObject[] = [
   {
-    element: <Login />,
+    // element: <Login />,
     children: [
       {
         path: PATH.login,
