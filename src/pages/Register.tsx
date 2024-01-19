@@ -1,4 +1,4 @@
-import { RegisterTemplate } from "components";
+import { RegisterTemplate } from "../components";
 
 export const Register = () => {
   return <RegisterTemplate />;
