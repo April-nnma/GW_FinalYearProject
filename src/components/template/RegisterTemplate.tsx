@@ -1,114 +1,187 @@
+import { useState } from "react";
+import "tailwind-datepicker-react";
 export const RegisterTemplate = () => {
+  const [selectedDate, setDate] = useState(null);
+
   return (
-    <div>
-      <section className="bg-gray-50 dark:bg-gray-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
-          >
-            <img
-              className="w-8 h-8 mr-2"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-              alt="logo"
-            />
-            Flowbite
-          </a>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                Create an account
+    <div className="bg-white">
+      <div className="flex justify-center h-screen">
+        <div
+          className="hidden bg-cover lg:block lg:w-4/6"
+          style={{
+            backgroundImage:
+              "url(https://t3.ftcdn.net/jpg/03/94/94/92/360_F_394949282_FOyFFN53l0juz58dXuKjzl1CQ3Ruuq90.jpg)",
+          }}
+        >
+          <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
+            <div>
+              <h1 className="text-8xl font-bold text-white sm:text-6xl transition-all duration-300 ease-in-out hover:text-blue-500">
+                facebook
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+
+              <p className="max-w-xl mt-3 text-gray-300">
+                Connect with friends and the world around you on facebook
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-3/6">
+          <div className="flex-1">
+            <div className="text-center">
+              <div className="flex justify-center mx-auto">
+                <img
+                  className="w-12 h-12 sm:h-12 sm:w-12"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+                  alt="#"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <form>
                 <div>
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
                   >
-                    Your email
+                    Full Name
+                  </label>
+                  <input
+                    type="fullname"
+                    name="fullname"
+                    id="fullname"
+                    placeholder="Full Name"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="mt-6">
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
+                  >
+                    Email Address
                   </label>
                   <input
                     type="email"
                     name="email"
                     id="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
+                    placeholder="Email"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="confirm-password"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Confirm password
-                  </label>
-                  <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
-                </div>
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="terms"
-                      aria-describedby="terms"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
+
+                <div className="mt-6">
+                  <div className="flex justify-between mb-2">
                     <label
-                      htmlFor="terms"
-                      className="font-light text-gray-500 dark:text-gray-300"
+                      htmlFor="password"
+                      className="text-sm text-gray-800 dark:text-gray-800"
                     >
-                      I accept the{" "}
-                      <a
-                        className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                        href="#"
-                      >
-                        Terms and Conditions
-                      </a>
+                      Password
                     </label>
                   </div>
+                  <div className="relative">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Your Password"
+                      className="block w-full px-4 py-2 pr-10 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
+                    />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="#bbb"
+                      stroke="#bbb"
+                      className="w-[18px] h-[18px] absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                      viewBox="0 0 128 128"
+                    >
+                      <path
+                        d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z"
+                        data-original="#000000"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-                <button
-                  type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Create an account
-                </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{" "}
-                  <a
-                    href="#"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                <div className="mt-6">
+                  <label
+                    htmlFor="date"
+                    className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
                   >
-                    Login here
-                  </a>
-                </p>
+                    Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    name="date"
+                    id="date"
+                    placeholder="Date of Birth"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
+                  />
+                  {/* <DatePicker
+                    selected={selectedDate}
+                    onChange={(date) => setDate(date)}
+                  /> */}
+                </div>
+                <div className="flex justify-start items-center gap-3 my-3">
+                  <input
+                    type="radio"
+                    name="radio"
+                    id="male"
+                    value="male"
+                    // checked={gender === "male"}
+                    // onChange={(e) => setGender(e.target.value)}
+                  />
+                  <label htmlFor="male" className="text-gray-700 font-semibold">
+                    Male
+                  </label>
+                  <input
+                    type="radio"
+                    name="radio"
+                    id="female"
+                    value="female"
+                    // checked={gender === "female"}
+                    // onChange={(e) => setGender(e.target.value)}
+                  />
+                  <label
+                    htmlFor="female"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Female
+                  </label>
+                  <input
+                    type="radio"
+                    name="radio"
+                    id="other"
+                    value="other"
+                    // checked={gender === "custom"}
+                    // onChange={(e) => setGender(e.target.value)}
+                  />
+                  <label
+                    htmlFor="custom"
+                    className="text-gray-700 font-semibold"
+                  >
+                    Other
+                  </label>
+                </div>
               </form>
+
+              <div className="mt-2">
+                {/* <div className="border-t border-gray-300"></div> */}
+                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
+                  Create New Account
+                </button>
+              </div>
+              <div className="flex justify-center mx-auto mt-10">
+                <img
+                  className="w-30 h-30 sm:h-10 sm:w-30 "
+                  src="https://cdn.pixabay.com/photo/2021/12/06/13/45/meta-6850393_960_720.png"
+                  alt="#"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
+export default RegisterTemplate;

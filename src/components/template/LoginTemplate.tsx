@@ -27,7 +27,7 @@ export const LoginTemplate = () => {
             <div className="text-center">
               <div className="flex justify-center mx-auto">
                 <img
-                  className="w-20 h-20 sm:h-20"
+                  className="w-12 h-12 sm:h-12 sm:w-12"
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
                   alt="#"
                 />
@@ -104,6 +104,13 @@ export const LoginTemplate = () => {
                 <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
                   Create New Account
                 </button>
+              </div>
+              <div className="flex justify-center mx-auto mt-10">
+                <img
+                  className="w-30 h-30 sm:h-10 sm:w-30 "
+                  src="https://cdn.pixabay.com/photo/2021/12/06/13/45/meta-6850393_960_720.png"
+                  alt="#"
+                />
               </div>
             </div>
           </div>
