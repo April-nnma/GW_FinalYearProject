@@ -116,10 +116,6 @@ export const RegisterTemplate = () => {
                     placeholder="Date of Birth"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
                   />
-                  {/* <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => setDate(date)}
-                  /> */}
                 </div>
                 <div className="flex justify-start items-center gap-3 my-3">
                   <input
