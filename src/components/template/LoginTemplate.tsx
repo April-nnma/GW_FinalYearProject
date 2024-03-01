@@ -107,7 +107,7 @@ export const LoginTemplate = () => {
               </div>
               <div className="flex justify-center mx-auto mt-10">
                 <img
-                  className="w-30 h-30 sm:h-10 sm:w-30 "
+                  className="w-30 h-30 sm:w-30 md:w-20 lg:h-10 sm:w-30"
                   src="https://cdn.pixabay.com/photo/2021/12/06/13/45/meta-6850393_960_720.png"
                   alt="#"
                 />
