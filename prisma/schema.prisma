@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model department {
+  department_id   Int     @id @default(autoincrement())
+  department_name String? @db.VarChar(100)
+  user            user[]
+}
+
+model role {
+  role_id   Int     @id @default(autoincrement())
+  role_name String? @db.VarChar(100)
+  user      user[]
+}
+
+model user {
+  user_id       Int         @id @default(autoincrement())
+  first_name    String?     @db.VarChar(255)
+  last_name     String?     @db.VarChar(255)
+  email         String?     @db.VarChar(255)
+  address       String?     @db.VarChar(255)
+  gender        String?     @db.VarChar(25)
+  day_of_birth  DateTime?   @db.Date
+  role_id       Int?
+  department_id Int?
+  password      String?     @db.VarChar(255)
+  role          role?       @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_1")
+  department    department? @relation(fields: [department_id], references: [department_id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_2")
+
+  @@index([department_id], map: "department_id")
+  @@index([role_id], map: "role_id")
+}
