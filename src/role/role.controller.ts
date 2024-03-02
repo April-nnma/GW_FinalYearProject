@@ -17,6 +17,7 @@ export class RoleController {
 
   @Get('/getRole')
   getRole() {
+    // tương tự như getUser
     return this.roleService.getRole();
   }
 
