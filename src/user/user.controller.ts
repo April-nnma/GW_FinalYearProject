@@ -6,12 +6,12 @@ import express from 'express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('/getUser')
+  @Get('getUser')
   getUser() {
     return this.userService.getUser();
   }
 
-  @Get('/register')
+  @Post('register')
   async register(@Body() user) {
     return this.userService.register(user);
   }
