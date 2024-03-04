@@ -24,15 +24,14 @@ export const RegisterTemplate = () => {
 
   const onSubmit = async (e, data) => {
     e.preventDefault();
-    console.log("abc");
     try {
       const response = await axios.post(
-        "http://localhost:3000/user/login",
+        "http://localhost:3000/user/register",
         data
       );
       console.log(response.data);
     } catch (error) {
-      console.error("Error register user:", error);
+      console.error("Error registering user:", error);
     }
   };
 
@@ -72,7 +71,7 @@ export const RegisterTemplate = () => {
             </div>
 
             <div className="mt-8">
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label

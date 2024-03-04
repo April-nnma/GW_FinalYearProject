@@ -7,7 +7,7 @@ export const LoginTemplate = () => {
     const sendData = async () => {
       try {
         // Replace the URL with your desired API endpoint
-        const response = await fetch("http://localhost:3001/postData", {
+        const response = await fetch("http://localhost:3000/user/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -136,7 +136,7 @@ export const LoginTemplate = () => {
 
               <div className="mt-6">
                 <div className="border-t border-gray-300"></div>
-                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50" >
+                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
                   Create New Account
                 </button>
               </div>
@@ -154,5 +154,3 @@ export const LoginTemplate = () => {
     </div>
   );
 };
-
-
