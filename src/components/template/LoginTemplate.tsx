@@ -1,4 +1,38 @@
+import React, { useEffect, useState } from "react";
+
 export const LoginTemplate = () => {
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    const sendData = async () => {
+      try {
+        // Replace the URL with your desired API endpoint
+        const response = await fetch("http://localhost:3001/postData", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            key: "value",
+            antherKey: "antherValue",
+          }),
+        });
+        const result = await response.text();
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    sendData();
+  }, []);
+
+  // return (
+  //   <div>
+  //     <h1>Data from custom endpoint:</h1>
+  //     <p>{data}</p>
+  //   </div>
+  // );
   return (
     <div className="bg-white">
       <div className="flex justify-center h-screen">
@@ -16,7 +50,8 @@ export const LoginTemplate = () => {
               </h1>
 
               <p className="max-w-xl mt-3 text-gray-300">
-                Connect with friends and the world around you on facebook
+                Connect with friends and the world around you on facebook:{" "}
+                {data}
               </p>
             </div>
           </div>
@@ -101,7 +136,7 @@ export const LoginTemplate = () => {
 
               <div className="mt-6">
                 <div className="border-t border-gray-300"></div>
-                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
+                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50" >
                   Create New Account
                 </button>
               </div>
@@ -119,3 +154,5 @@ export const LoginTemplate = () => {
     </div>
   );
 };
+
+

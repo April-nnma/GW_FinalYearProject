@@ -1,7 +1,40 @@
-import { useState } from "react";
-import "tailwind-datepicker-react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  firstname: z.string().min(2, { message: "Required" }),
+  lastname: z.string().min(2, { message: "Required" }),
+  email: z.string().email({ message: "Invalid email format" }),
+  address: z.string().min(10),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+  //dateofbirth: z.date(),
+  gender: z.string().min(1, { message: "Required" }),
+});
+
 export const RegisterTemplate = () => {
-  const [selectedDate, setDate] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+
+  const onSubmit = async (e, data) => {
+    e.preventDefault();
+    console.log("abc");
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/login",
+        data
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error register user:", error);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -40,21 +73,44 @@ export const RegisterTemplate = () => {
 
             <div className="mt-8">
               <form>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    type="fullname"
-                    name="fullname"
-                    id="fullname"
-                    placeholder="Full Name"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="firstname"
+                      className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      {...register("firstname")}
+                      type="text"
+                      name="firstname"
+                      id="firstname"
+                      placeholder="First Name"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
+                    />
+                    {/* {errors.firstname?.message && (
+                      <p>{errors.firstname?.message}</p>
+                    )} */}
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="lastname"
+                      className="block mb-2 text-sm text-gray-800 dark:text-gray-800"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      {...register("lastname", { required: true })}
+                      type="text"
+                      name="lastname"
+                      id="lastname"
+                      placeholder="Last Name"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
+                    />
+                  </div>
                 </div>
+
                 <div className="mt-6">
                   <label
                     htmlFor="email"
@@ -63,6 +119,7 @@ export const RegisterTemplate = () => {
                     Email Address
                   </label>
                   <input
+                    {...register("email")}
                     type="email"
                     name="email"
                     id="email"
@@ -82,6 +139,7 @@ export const RegisterTemplate = () => {
                   </div>
                   <div className="relative">
                     <input
+                      {...register("password")}
                       type="password"
                       name="password"
                       id="password"
@@ -110,6 +168,7 @@ export const RegisterTemplate = () => {
                     Date of Birth
                   </label>
                   <input
+                    {...register("dateofbirth")}
                     type="date"
                     name="date"
                     id="date"
@@ -158,14 +217,25 @@ export const RegisterTemplate = () => {
                     Other
                   </label>
                 </div>
-              </form>
 
-              <div className="mt-2">
-                {/* <div className="border-t border-gray-300"></div> */}
-                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
-                  Create New Account
+                <button
+                  type="submit"
+                  className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50"
+                >
+                  Create New Account 123
                 </button>
-              </div>
+              </form>
+              {/*
+              <form onSubmit={handleSubmit((d) => console.log(d))}>
+                <div className="mt-2">
+                  {/* <div className="border-t border-gray-300"></div> 
+                  <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
+                    Create New Account
+                  </button>
+                </div>
+              </form>
+              */}
+
               <div className="flex justify-center mx-auto mt-10">
                 <img
                   className="w-30 h-30 sm:h-10 sm:w-30 "
