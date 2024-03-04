@@ -5,7 +5,7 @@ import { DepartmentService } from './department.service';
 export class DepartmentController {
   constructor(private readonly departmentService: DepartmentService) {}
 
-  @Get('/getDepartment')
+  @Get('getDepartment')
   getDepartment() {
     return this.departmentService.getDepartment();
   }

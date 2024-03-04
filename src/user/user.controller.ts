@@ -16,8 +16,8 @@ export class UserController {
     return this.userService.register(user);
   }
 
-  // @Get('login')
-  // async login(@Body() user) {
-  //   return this.userService.login(user);
-  // }
+  @Post('login')
+  async login(@Body() user) {
+    return this.userService.login(user);
+  }
 }

@@ -15,7 +15,7 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  @Get('/getRole')
+  @Get('getRole')
   getRole() {
     // tương tự như getUser
     return this.roleService.getRole();
