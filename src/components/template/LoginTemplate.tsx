@@ -1,46 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 export const LoginTemplate = () => {
-  const [data, setData] = useState("");
-
-  useEffect(() => {
-    const sendData = async () => {
-      try {
-        // Replace the URL with your desired API endpoint
-        const response = await fetch("http://localhost:3000/user/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            key: "value",
-            antherKey: "antherValue",
-          }),
-        });
-        const result = await response.text();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    sendData();
-  }, []);
-
-  // return (
-  //   <div>
-  //     <h1>Data from custom endpoint:</h1>
-  //     <p>{data}</p>
-  //   </div>
-  // );
   return (
     <div className="bg-white">
       <div className="flex justify-center h-screen">
         <div
           className="hidden bg-cover lg:block lg:w-4/6"
           style={{
-            backgroundImage:
-              "url(https://t3.ftcdn.net/jpg/03/94/94/92/360_F_394949282_FOyFFN53l0juz58dXuKjzl1CQ3Ruuq90.jpg)",
+            backgroundImage: "url(../../../public/images/image1.jpg)",
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
@@ -50,8 +17,7 @@ export const LoginTemplate = () => {
               </h1>
 
               <p className="max-w-xl mt-3 text-gray-300">
-                Connect with friends and the world around you on facebook:{" "}
-                {data}
+                Connect with friends and the world around you on facebook
               </p>
             </div>
           </div>
@@ -63,7 +29,7 @@ export const LoginTemplate = () => {
               <div className="flex justify-center mx-auto">
                 <img
                   className="w-12 h-12 sm:h-12 sm:w-12"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+                  src="../../../public/images/logo.png"
                   alt="#"
                 />
               </div>
@@ -123,27 +89,26 @@ export const LoginTemplate = () => {
                   <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                     Login
                   </button>
-                  <div className="mt-4">
-                    <a
-                      href="#"
-                      className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
+                </div>
+                <div className="mt-6">
+                  <div className="border-t border-gray-300"></div>
+                  <button
+                    onClick={() => {
+                      {
+                        <Navigate to="./register" />;
+                      }
+                    }}
+                    className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50"
+                  >
+                    Create New Account
+                  </button>
                 </div>
               </form>
 
-              <div className="mt-6">
-                <div className="border-t border-gray-300"></div>
-                <button className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50">
-                  Create New Account
-                </button>
-              </div>
               <div className="flex justify-center mx-auto mt-10">
                 <img
                   className="w-30 h-30 sm:w-30 md:w-20 lg:h-10 sm:w-30"
-                  src="https://cdn.pixabay.com/photo/2021/12/06/13/45/meta-6850393_960_720.png"
+                  src="../../../public/images/meta.png"
                   alt="#"
                 />
               </div>
