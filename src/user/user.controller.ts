@@ -12,7 +12,8 @@ export class UserController {
   }
 
   @Post('register')
-  async register(@Body() user) {
+  async register(@Body() user:any) {
+    console.log(user)
     return this.userService.register(user);
   }
 
