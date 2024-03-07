@@ -15,9 +15,10 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
   try {
-    console.log("data: ", data);
+
     const reponse = await axios.post("http://localhost:3000/auth/login", data);
-    console.log(reponse.data);
+    console.log(reponse.data)
+    localStorage.setItem('token', reponse.data.content.token);
   } catch (error) {
     console.error("Error login user:", error);
   }

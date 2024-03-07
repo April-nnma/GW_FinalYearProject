@@ -39,11 +39,11 @@ export const RegisterTemplate = () => {
                 />
               </div>
             </div>
-            <div className="mt-8">
+            <div className="mt-4">
               <FormRegister />
               <div className="flex justify-center mx-auto mt-10">
                 <img
-                  className="w-30 h-30 sm:h-10 sm:w-30 "
+                  className="w-30 h-30 sm:h-10  "
                   src="../../../public/images/meta.png"
                   alt="#"
                 />

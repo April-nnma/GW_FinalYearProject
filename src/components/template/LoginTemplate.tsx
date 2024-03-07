@@ -1,6 +1,33 @@
-import { Navigate } from "react-router-dom";
+import { PATH } from "constant";
+import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { LoginSchema, LoginSchemaType } from "schema";
+import { loginUser } from "services";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 export const LoginTemplate = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchemaType>({
+    mode: "onChange",
+    resolver: zodResolver(LoginSchema),
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    try {
+      loginUser(data);
+      toast.success("Register successfully");
+      //redirect về page login
+      navigate(PATH.login);
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.response?.data?.content || "An error occurred");
+    }
+  });
   return (
     <div className="bg-white">
       <div className="flex justify-center h-screen">
@@ -36,7 +63,7 @@ export const LoginTemplate = () => {
             </div>
 
             <div className="mt-8">
-              <form>
+              <form onSubmit={onSubmit}>
                 <div>
                   <label
                     htmlFor="email"
@@ -47,10 +74,16 @@ export const LoginTemplate = () => {
                   <input
                     type="email"
                     name="email"
+                    {...register("email")}
                     id="email"
                     placeholder="example@gmail.com"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="mt-6">
@@ -66,10 +99,16 @@ export const LoginTemplate = () => {
                     <input
                       type="password"
                       name="password"
+                      {...register("password")}
                       id="password"
                       placeholder="Your Password"
                       className="block w-full px-4 py-2 pr-10 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-400 focus:ring-opacity-40"
                     />
+                    {errors.password && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.password.message}
+                      </p>
+                    )}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="#bbb"
@@ -107,7 +146,7 @@ export const LoginTemplate = () => {
 
               <div className="flex justify-center mx-auto mt-10">
                 <img
-                  className="w-30 h-30 sm:w-30 md:w-20 lg:h-10 sm:w-30"
+                  className="w-30 h-30 sm:w-30 md:w-20 lg:h-10 min-sm:w-10"
                   src="../../../public/images/meta.png"
                   alt="#"
                 />
