@@ -15,7 +15,7 @@
 //     });
 //   }
 // }
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 export type User = any;
@@ -36,8 +36,7 @@ export class UserService {
     console.log(user);
     const hashedPassword = await bcrypt.has;
     const data = {
-      first_name: user.firstname,
-      last_name: user.lastname,
+      full_name: user.fullname,
       email: user.email,
       password: user.password,
     };
