@@ -1,3 +1,3 @@
 export * from "./layouts";
-export * from "./template";
+export * from "./templates";
 export * from "./ui";
