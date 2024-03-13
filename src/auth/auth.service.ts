@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   Logger,
+  Res,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
@@ -9,6 +10,7 @@ import { loginDto, registerDto } from 'src/types/user.type';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import ResponseCode, { response } from 'src/domain/response';
 import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -26,9 +28,9 @@ export class AuthService {
         where: { email: email },
       });
 
-      if (!userCheck) throw new UnauthorizedException();
+      if (!userCheck) throw new BadRequestException(ResponseCode.failed('Email not found'));
       const matchPass = await bcrypt.compare(password, userCheck.password);
-      if (!matchPass) return ResponseCode.failed('password mismatch');
+      if (!matchPass) throw new BadRequestException(ResponseCode.failed('password mismatch'))
       delete userCheck.password;
 
       return ResponseCode.success({
@@ -40,13 +42,16 @@ export class AuthService {
     }
   }
 
-  async register(registerUserDto: registerDto): Promise<response> {
+  async register(registerUserDto: registerDto,@Res() responses:Response): Promise<Response> {
     try {
       const { email, password, fullname, date_of_birth } = registerUserDto;
       const checkUser = await this.prismaService.user.findFirst({
         where: { email: email },
       });
-      if (checkUser) return ResponseCode.failed('email is exist');
+      console.log(ResponseCode.failed('email is exist'))
+      if (checkUser) return responses.status(400).send(ResponseCode.failed('email is not exist'));
+     
+      
       const saltOrRounds = 10;
       const hashPass = await bcrypt.hash(password, saltOrRounds);
 
@@ -62,10 +67,10 @@ export class AuthService {
         .then(async (result) => {
           return result;
         });
-      if (!userCreate) return ResponseCode.failed();
-      return ResponseCode.success({
+      if (!userCreate)  return responses.status(400).send(ResponseCode.failed()) ;
+      return  responses.status(200).send(ResponseCode.success({
         token:await this.jwtService.signAsync(userCreate)
-      });
+      }))
     } catch (err) {
       throw new BadRequestException();
     }
