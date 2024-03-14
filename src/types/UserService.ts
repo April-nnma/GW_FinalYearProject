@@ -4,3 +4,4 @@ export type UserLogin = {
   password: string;
   token: string;
 };
+// export type UserByToken = UserLogin{};

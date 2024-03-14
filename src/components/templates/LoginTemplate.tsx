@@ -85,8 +85,9 @@ const FormLogin = () => {
         navigate("/");
         toast.success("Login successfully");
       })
-      .catch(() => {
+      .catch((error) => {
         //xử lý action thất bại
+        handleError(error, "Password");
       });
 
     // try {

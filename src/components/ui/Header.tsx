@@ -13,10 +13,7 @@ export const Header = () => {
       {/* Left */}
       <div className="flex items-center mr-4">
         <div className="w-10 h-10 sm:h-10 sm:w-10">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
-            alt="Facebook Logo"
-          />
+          <img src="../../../public/images/logo.png" alt="Facebook Logo" />
         </div>
         <div className="ml-2">
           <input
@@ -37,7 +34,7 @@ export const Header = () => {
       </div>
 
       {/* Right */}
-      <div className="flex space-x-6 items-center">
+      <div className="flex space-x-6 items-center ml-4">
         <div className="md:flex space-x-6 hidden">
           <CgMenuGridO className="w-7 h-7" />
           <FaFacebookMessenger className="w-7 h-7" />
