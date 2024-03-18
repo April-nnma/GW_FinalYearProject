@@ -16,6 +16,7 @@ const userServiceSlice = createSlice({
   initialState,
   reducers: {}, //xử lý action đồng bộ
   extraReducers(builder) {
+    //xử lý action bất đồng bộ => callAPI
     builder
       .addCase(loginThunk.pending, (state) => {
         state.isFetchingLogin = true;
@@ -33,7 +34,7 @@ const userServiceSlice = createSlice({
 
         // state.token = payload;
       });
-  }, //xử lý action bất đồng bộ => callAPI
+  },
 });
 export const { actions: userServiceAction, reducer: userServiceReducer } =
   userServiceSlice;

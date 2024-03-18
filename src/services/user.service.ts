@@ -10,6 +10,9 @@ export const userService = {
   register: (data: RegisterSchemaType) => api.post("/register", data),
   login: (data: LoginSchemaType) =>
     api.post<ApiResponse<UserLogin>>("/login", data),
+  logout: () => {
+    localStorage.removeItem("token");
+  },
 
   // giữ thông tin login khi f5 mà ko mất => lưu xuống localStorage
   // axios({
