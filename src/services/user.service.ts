@@ -8,29 +8,9 @@ const api = apiInstance({
 
 export const userService = {
   register: (data: RegisterSchemaType) => api.post("/register", data),
+  // giữ thông tin login khi f5 mà ko mất => lưu xuống localStorage
   login: (data: LoginSchemaType) =>
     api.post<ApiResponse<UserLogin>>("/login", data),
-  logout: () => {
-    localStorage.removeItem("token");
-  },
 
-  // giữ thông tin login khi f5 mà ko mất => lưu xuống localStorage
-  // axios({
-  //   method: "POST",
-  //   url: "http://localhost:3000/auth/register",
-  //   data,
-  //   headers: {
-  //     Authorization: "Bearer " + validToken(),
-  //   },
-  // }),
+  getUserByToken: () => api.get<ApiResponse<UserLogin>>("/profile"),
 };
-
-// export const loginUser = async (data) => {
-//   try {
-//     const reponse = await axios.post("http://localhost:3000/auth/login", data);
-//     console.log(reponse.data);
-//     localStorage.setItem("token", reponse.data.content.token);
-//   } catch (error) {
-//     console.error("Error login user:", error);
-//   }
-// };

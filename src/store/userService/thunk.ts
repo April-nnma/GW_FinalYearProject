@@ -1,9 +1,8 @@
 //middle wares => callAPI => tạo req lên server => đợi server trả về rep => middle dispatch lên store redux
-
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginSchemaType } from "schema";
 import { userService } from "services";
-import { sleep } from "utils";
+import { getToken, sleep } from "utils";
 
 //payload chính là 1 cái rep trả về từ server
 export const loginThunk = createAsyncThunk(
@@ -15,6 +14,23 @@ export const loginThunk = createAsyncThunk(
       await sleep();
 
       return data.data.content;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getUserByToken = createAsyncThunk(
+  "userService/getUserByToken",
+  async (_, { rejectWithValue }) => {
+    try {
+      //lấy token dưới localStorage
+      const token = getToken();
+      //nếu user đã đăng nhập thành công => có token
+      if (token) {
+        const data = await userService.getUserByToken();
+        return data.data.content;
+      }
     } catch (error) {
       return rejectWithValue(error);
     }

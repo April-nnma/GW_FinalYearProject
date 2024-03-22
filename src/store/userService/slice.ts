@@ -1,20 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserLogin } from "types";
 import { loginThunk } from ".";
+import { getToken } from "utils";
 type UserServiceInitialState = {
   token?: string;
   userLogin?: UserLogin;
   isFetchingLogin?: boolean;
 };
 const initialState: UserServiceInitialState = {
-  token: localStorage.getItem("token"),
+  token: getToken(),
   isFetchingLogin: false,
 };
 
 const userServiceSlice = createSlice({
   name: "userService",
   initialState,
-  reducers: {}, //xử lý action đồng bộ
+  reducers: { //xử lý action đồng bộ
+    logOut: (state, { payload }: PayloadAction<string>) => {},
+  }, 
   extraReducers(builder) {
     //xử lý action bất đồng bộ => callAPI
     builder
