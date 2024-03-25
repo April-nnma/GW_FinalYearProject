@@ -20,7 +20,7 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-export const getUserByToken = createAsyncThunk(
+export const getUserByTokenThunk = createAsyncThunk(
   "userService/getUserByToken",
   async (_, { rejectWithValue }) => {
     try {

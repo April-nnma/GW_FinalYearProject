@@ -15,9 +15,10 @@ const initialState: UserServiceInitialState = {
 const userServiceSlice = createSlice({
   name: "userService",
   initialState,
-  reducers: { //xử lý action đồng bộ
+  reducers: {
+    //xử lý action đồng bộ
     logOut: (state, { payload }: PayloadAction<string>) => {},
-  }, 
+  },
   extraReducers(builder) {
     //xử lý action bất đồng bộ => callAPI
     builder
@@ -31,6 +32,7 @@ const userServiceSlice = createSlice({
         console.log("payload: ", payload);
         //lưu token xg localStorage
         localStorage.setItem("TOKEN", payload.token);
+        state.token = payload.token;
         //set lại user
         state.userLogin = payload;
         state.isFetchingLogin = false;

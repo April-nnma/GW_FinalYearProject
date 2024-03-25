@@ -71,13 +71,15 @@ export const Header = () => {
 
         {/* Right */}
         <div className="flex space-x-6 items-center ml-4">
-          <div className="md:flex space-x-6 hidden">
-            <FaFacebookMessenger className="w-7 h-7" />
-            {/* tạm */}
-            {/* <MdAccountCircle className="w-7 h-7" /> */}
-            <VscAccount className="w-7 h-7" />
-            <IoIosLogOut className="w-7 h-7" onClick={handleLogout} />
-          </div>
+          {!token && <p>login</p>}
+          {!!token && (
+            <div className="md:flex space-x-6 hidden">
+              <FaFacebookMessenger className="w-7 h-7" />
+              <VscAccount className="w-7 h-7" />
+              <IoIosLogOut className="w-7 h-7" onClick={handleLogout} />
+            </div>
+          )}
+
           <div className="w-10 h-10">
             {/* <img
           src={session ? session?.user?.image : nouser.src}
