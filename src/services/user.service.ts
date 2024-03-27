@@ -12,5 +12,5 @@ export const userService = {
   login: (data: LoginSchemaType) =>
     api.post<ApiResponse<UserLogin>>("/login", data),
 
-  getUserByToken: () => api.get<ApiResponse<UserLogin>>("/profile"),
+  //getUserByToken: () => api.get<ApiResponse<UserLogin>>("/Info"),
 };

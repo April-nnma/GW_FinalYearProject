@@ -1,33 +1,39 @@
-import { FaBell, FaFacebookMessenger } from "react-icons/fa";
+import { FaBell, FaFacebookMessenger, FaUser } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { VscAccount } from "react-icons/vsc";
 import { MdHome, MdOutlineOndemandVideo } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "hooks";
 import styled from "styled-components";
+import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
+import { Popover } from "../ui/Popover";
+import {
+  PopoverArrow,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+} from "@chakra-ui/react";
+import { useAppDispatch } from "store";
+import { userServiceActions } from "store/userService";
+import { PATH } from "constant";
 
 export const Header = () => {
   const navigate = useNavigate();
 
-  const { token } = useAuth();
-  console.log("token: ", token);
+  const { token, user } = useAuth();
 
-  const handleLogout = () => {
-    localStorage.removeItem("TOKEN");
-    navigate("/login");
-  };
+  const dispatch = useAppDispatch();
 
   return (
     <form>
-      <div className="p-4 flex items-center justify-between border-b lg:px-10 bg-gray-100">
+      <div className="p-4 flex items-center justify-between border-b lg:px-10">
         {/* Left */}
         <div className="flex items-center mr-4">
           <div className="w-10 h-10 sm:h-10 sm:w-10">
             <img src="../../../public/images/logo.png" alt="#" />
           </div>
-          <div className="flex items-center bg-white rounded-full p-3 pl-5 ml-3 ">
+          <div className="flex items-center bg-gray-200 rounded-full p-3 pl-5 ml-3 ">
             <input
               type="text"
               placeholder="Search Facebook"
@@ -71,21 +77,45 @@ export const Header = () => {
 
         {/* Right */}
         <div className="flex space-x-6 items-center ml-4">
-          {!token && <p>login</p>}
+          {!token && (
+            <p className="flex items-center font-semibold">
+              <FaUser />
+              <span
+                className="ml-2 cursor-pointer hover:text-primary"
+                onClick={() => navigate(PATH.login)}
+              >
+                Login
+              </span>
+              <span className="inline-block h-6 w-px bg-black mx-2"></span>
+              <span
+                className="cursor-pointer hover:text-primary"
+                onClick={() => navigate(PATH.register)}
+              >
+                Register
+              </span>
+            </p>
+          )}
           {!!token && (
             <div className="md:flex space-x-6 hidden">
               <FaFacebookMessenger className="w-7 h-7" />
-              <VscAccount className="w-7 h-7" />
-              <IoIosLogOut className="w-7 h-7" onClick={handleLogout} />
+              <Popover>
+                <PopoverTrigger>
+                  <Avatar boxSize="7">
+                    <AvatarBadge boxSize="0.75em" bg="green.500" />
+                  </Avatar>
+                </PopoverTrigger>
+                <PopoverContent maxWidth="100px" maxHeight="1000px">
+                  <PopoverArrow />
+                  <PopoverHeader>{user?.fullName}</PopoverHeader>
+                </PopoverContent>
+              </Popover>
+
+              <IoIosLogOut
+                className="w-7 h-7"
+                onClick={() => dispatch(userServiceActions.logOut("abc"))}
+              />
             </div>
           )}
-
-          <div className="w-10 h-10">
-            {/* <img
-          src={session ? session?.user?.image : nouser.src}
-          className="rounded-full"
-        /> */}
-          </div>
         </div>
       </div>
     </form>

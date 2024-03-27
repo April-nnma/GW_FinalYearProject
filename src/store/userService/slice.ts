@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserLogin } from "types";
-import { loginThunk } from ".";
-import { getToken } from "utils";
+import { getUserByTokenThunk, loginThunk } from ".";
+import { getToken, removeToken } from "utils";
 type UserServiceInitialState = {
   token?: string;
   userLogin?: UserLogin;
@@ -17,7 +17,12 @@ const userServiceSlice = createSlice({
   initialState,
   reducers: {
     //xử lý action đồng bộ
-    logOut: (state, { payload }: PayloadAction<string>) => {},
+    logOut: (state, { payload }: PayloadAction<string>) => {
+      console.log("payload: ", payload);
+      state.token = undefined;
+      state.userLogin = undefined;
+      removeToken();
+    },
   },
   extraReducers(builder) {
     //xử lý action bất đồng bộ => callAPI
@@ -38,8 +43,11 @@ const userServiceSlice = createSlice({
         state.isFetchingLogin = false;
 
         // state.token = payload;
+      })
+      .addCase(getUserByTokenThunk.fulfilled, (state, { payload }) => {
+        state.userLogin = payload;
       });
   },
 });
-export const { actions: userServiceAction, reducer: userServiceReducer } =
+export const { actions: userServiceActions, reducer: userServiceReducer } =
   userServiceSlice;

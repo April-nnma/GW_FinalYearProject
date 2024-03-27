@@ -1,15 +1,11 @@
 import {
-  Avatar as AvatarA,
-  AvatarProps as AvatarPropsA,
-  AvatarGroup,
-} from "@chakra-ui/react";
+  Avatar as AvatarR,
+  AvatarProps as AvatarPropsR,
+} from "@chakra-ui/avatar";
 
-type AvatarObject = React.FC<AvatarPropsA> & { Group: typeof AvatarGroup };
+type AvatarProps = AvatarPropsR & {};
 
-export const Avatar: AvatarObject = (props) => {
-  return <AvatarA {...props} />;
+export const Avatar = (props: AvatarProps) => {
+  return <AvatarR {...props} />;
 };
-
-Avatar.Group = AvatarGroup;
-
-export default Avatar;
+//bug Header

@@ -86,24 +86,8 @@ const FormLogin = () => {
       })
       .catch((error) => {
         //xử lý action thất bại
-        handleError(error, "Password");
+        handleError(error, "Email or password incorrect");
       });
-
-    // try {
-    //   await userService.login(data);
-    //   //toast.success("Register successfully");
-    //   //redirect về page login
-    //   navigate(PATH.login);
-    // } catch (error) {
-    //   handleError(error, "Email already exists");
-    //   // console.log(error);
-    //   // if (error.response && error.response.status === 400) {
-    //   //   toast.error("Email already exists");
-    //   // } else {
-    //   //   // toast.error(error?.response?.data?.content || "An error occurred");
-    //   //   handleError(error);
-    //   // }
-    // }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -152,9 +136,6 @@ const FormLogin = () => {
         </div>
       </div>
       <div className="flex flex-col items-center mt-6">
-        {/* <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-          Login
-        </button> */}
         <Button
           type="submit"
           colorScheme="messenger"

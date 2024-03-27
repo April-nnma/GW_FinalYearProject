@@ -11,6 +11,7 @@ export const router: RouteObject[] = [
         index: true,
         element: <Home />,
       },
+
       // {
       //     path: PATH.account,
       //     element: <Account />
