@@ -1,16 +1,9 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  Res,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { loginDto, registerDto } from 'src/types/user.type';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import ResponseCode, { response } from 'src/domain/response';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +12,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   private logger = new Logger(AuthService.name);
+
   async logIn(loginDto: loginDto): Promise<response> {
     try {
       const { password, email } = loginDto;
@@ -27,6 +21,7 @@ export class AuthService {
       const userCheck = await this.prismaService.user.findFirst({
         where: { email: email },
       });
+      console.log(userCheck);
       if (!userCheck)
         throw new BadRequestException(ResponseCode.failed('Email not found'));
       //check password
@@ -43,47 +38,82 @@ export class AuthService {
     }
   }
 
-  async register(
-    registerUserDto: registerDto,
-    @Res() responses: Response,
-  ): Promise<Response> {
+  // async register(registerUserDto: registerDto): Promise<response> {
+  //   try {
+  //     const { email, password, fullname, date_of_birth } = registerUserDto;
+  //     const checkUser = await this.prismaService.user.findFirst({
+  //       where: { email: email },
+  //     });
+  //     console.log(ResponseCode.failed('email is exist'));
+  //     if (checkUser) return ResponseCode.failed('email is not exist');
+
+  //     const saltOrRounds = 10;
+  //     const hashPass = await bcrypt.hash(password, saltOrRounds);
+
+  //     const userCreate = await this.prismaService.user
+  //       .create({
+  //         data: {
+  //           fullname: fullname,
+  //           email,
+  //           password: hashPass,
+  //           date_of_birth: date_of_birth,
+  //         },
+  //       })
+  //       .then(async (result) => {
+  //         return result;
+  //       });
+  //     if (!userCreate) return ResponseCode.failed();
+  //     return ResponseCode.success({
+  //       token: await this.jwtService.signAsync(userCreate),
+  //     });
+  //   } catch (err) {
+  //     throw new BadRequestException();
+  //   }
+  // }
+  async register(registerUserDto: registerDto): Promise<response> {
     try {
       const { email, password, fullname, date_of_birth } = registerUserDto;
-      const checkUser = await this.prismaService.user.findFirst({
+
+      // Check if the user already exists
+      const existingUser = await this.prismaService.user.findFirst({
         where: { email: email },
       });
-      console.log(ResponseCode.failed('email is exist'));
-      if (checkUser)
-        return responses
-          .status(400)
-          .send(ResponseCode.failed('email is not exist'));
+      if (existingUser) {
+        this.logger.warn(
+          `Attempted to register with an existing email: ${email}`,
+        );
+        throw new BadRequestException('Email already exists');
+      }
 
-      const saltOrRounds = 10;
-      const hashPass = await bcrypt.hash(password, saltOrRounds);
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-      const userCreate = await this.prismaService.user
-        .create({
-          data: {
-            fullname: fullname,
-            email,
-            password: hashPass,
-            date_of_birth: date_of_birth,
-          },
-        })
-        .then(async (result) => {
-          return result;
-        });
-      if (!userCreate) return responses.status(400).send(ResponseCode.failed());
-      return responses.status(200).send(
-        ResponseCode.success({
-          token: await this.jwtService.signAsync(userCreate),
-        }),
-      );
+      // Create the user
+      const newUser = await this.prismaService.user.create({
+        data: {
+          fullname,
+          email,
+          password: hashedPassword,
+          date_of_birth,
+        },
+      });
+
+      this.logger.log(`Registered a new user with email: ${newUser.email}`);
+
+      // Remove the password before creating the token
+      delete newUser.password;
+
+      // Sign the JWT token with the user_id from newUser object
+      const payload = { email: newUser.email, userId: newUser.user_id };
+
+      // Return success response with token
+      return ResponseCode.success({
+        token: await this.jwtService.signAsync(payload),
+      });
     } catch (err) {
-      throw new BadRequestException();
+      this.logger.error('Registration error:', err);
+      // Return or log the detailed error message
+      throw new BadRequestException(`Registration failed: ${err.message}`);
     }
-  }
-  async logOut(): Promise<{ message: string }> {
-    return { message: 'Please discard your authentication token.' };
   }
 }

@@ -1,34 +1,29 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import express from 'express';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/jwt/auth.guard';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
   @UseGuards(AuthGuard)
   @Get('getUser')
-  getUser(@Request() req) {
-    //return this.userService.getUser();
-    return req.user;
+  async getUser() {
+    return this.userService.getUser();
   }
 
-  @Post('register')
-  async register(@Body() user: any) {
-    console.log(user);
-    return this.userService.register(user);
+  @UseGuards(AuthGuard)
+  @Get('getInfo')
+  async getInfo(@Body() body: { token: string }) {
+    return this.userService.getInfo(body);
   }
 
-  @Post('login')
-  async login(@Body() user) {
-    return this.userService.login(user);
-  }
+  // @Get('profile')
+  // @UseGuards(AuthGuard)
+  // async getUserByToken(@Request() req) {
+  //   if (!req.user) {
+  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  //   }
+  //   return this.userService.getUserByToken(req.user.userId);
+  // }
 }

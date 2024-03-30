@@ -12,8 +12,9 @@ async function bootstrap() {
   app.use(express.static('.'));
 
   const port = configService.get<number>('PORT') || 3000;
-  console.log(port);
-  await app.listen(port);
+  await app.listen(port, () => {
+    console.log('port:', port);
+  });
 }
 
 bootstrap();
