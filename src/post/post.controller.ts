@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PostService } from './post.service';
-import { CreatePostDto } from './entities/post.entities';
+import { createPostDto } from 'src/types/post.type';
 
 @Controller('post')
 export class PostController {
@@ -12,7 +12,7 @@ export class PostController {
   }
 
   @Post('createPost')
-  createPost(@Body() createPostDto: CreatePostDto) {
+  createPost(@Body() createPostDto: createPostDto) {
     return this.postService.createPost(createPostDto);
   }
 }

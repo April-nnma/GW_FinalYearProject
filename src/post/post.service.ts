@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePostDto } from './entities/post.entities';
 import { PrismaService } from 'src/config/prisma/prisma.service';
+import { createPostDto } from 'src/types/post.type';
 
 @Injectable()
 export class PostService {
@@ -10,7 +10,7 @@ export class PostService {
     return await this.prisma.post.findMany();
   }
 
-  async createPost(createPostDto: CreatePostDto) {
+  async createPost(createPostDto: createPostDto) {
     const { user_id_create, title } = createPostDto;
 
     // Kiểm tra xem user có tồn tại không
