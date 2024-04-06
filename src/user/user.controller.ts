@@ -1,4 +1,4 @@
-import { Body, Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/jwt/auth.guard';
 
@@ -13,7 +13,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('getInfo')
+  @Post('getInfo')
   async getInfo(@Body() body: { token: string }) {
     return this.userService.getInfo(body);
   }
