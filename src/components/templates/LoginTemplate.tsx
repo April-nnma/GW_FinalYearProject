@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 import { LoginSchema, LoginSchemaType } from "schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Button } from "../ui/Button";
 import { handleError } from "utils";
 import { RootState, useAppDispatch } from "store";
-import { loginThunk } from "store/userService";
+import { loginThunk } from "store/authService";
 import { useSelector } from "react-redux";
+import { Button } from "@chakra-ui/react";
 
 export const LoginTemplate = () => {
   return (
@@ -73,7 +73,7 @@ const FormLogin = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isFetchingLogin } = useSelector(
-    (state: RootState) => state.userService
+    (state: RootState) => state.authService
   );
 
   const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
@@ -81,7 +81,7 @@ const FormLogin = () => {
       .unwrap()
       .then(() => {
         //xử lý action thành công
-        navigate("/");
+        // navigate("/");
         toast.success("Login successfully");
       })
       .catch((error) => {

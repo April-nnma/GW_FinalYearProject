@@ -1,13 +1,12 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userService } from "services";
+import { authService } from "services";
 import { RegisterSchema, RegisterSchemaType } from "schema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "constant";
 import { handleError } from "utils";
-import { Button } from "../ui/Button";
-import { Center } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 
 export const RegisterTemplate = () => {
   return (
@@ -72,7 +71,7 @@ const FormRegister = () => {
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
     try {
-      await userService.register(data);
+      await authService.register(data);
       toast.success("Register successfully");
       //redirect về page login
       navigate(PATH.login);

@@ -3,4 +3,5 @@ declare type ApiResponse<T> = {
   code: number;
   message: string;
   content: T;
+  error: null;
 };

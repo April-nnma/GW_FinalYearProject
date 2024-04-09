@@ -1,15 +1,13 @@
 import axios, { AxiosRequestHeaders, CreateAxiosDefaults } from "axios";
+import { getToken } from "utils";
 
-const validToken = () => {
-  return localStorage.getItem("token");
-};
 export const apiInstance = (config?: CreateAxiosDefaults) => {
   const api = axios.create(config);
   api.interceptors.request.use((config) => {
     return {
       ...config,
       headers: {
-        Authorization: "Bearer " + validToken,
+        Authorization: "Bearer " + getToken(),
       } as unknown as AxiosRequestHeaders,
     };
   });

@@ -1,33 +1,108 @@
-export const LeftSideBar = () => {
-  return (
-    <div className="w-[12rem] rounded-lg hidden sm:block">
-      <div className="py-2 px-4">
-        <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
-          <img
-            src="../../../public/images/friend.jpg"
-            alt="#"
-            className="w-8 h-8 rounded-full mr-2"
-          />
-          <div className="whitespace-nowrap">Find friends</div>
-        </div>
+import { Avatar } from "@chakra-ui/avatar";
+import { Image } from "@chakra-ui/react";
+import { useAuth } from "hooks";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 
-        <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
-          <img
-            src="../../../public/images/group.jpg"
-            alt="#"
-            className="w-8 h-8 rounded-full mr-2"
-          />
-          <div className="whitespace-nowrap">Groups</div>
-        </div>
-        <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
-          <img
-            src="../../../public/images/save.jpg"
-            alt="#"
-            className="w-8 h-8 rounded-full mr-2"
-          />
-          <div className="whitespace-nowrap">Saved</div>
-        </div>
-      </div>
+export const LeftSideBar = () => {
+  const { user } = useAuth();
+  return (
+    <div className="w-[22.5rem] h-auto py-3">
+      <ul className="w-full text-gray-600">
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Avatar size="sm" />
+            <div className="whitespace-nowrap ml-2 font-medium">
+              {user?.fullName} username
+            </div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/friend.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Friends</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/group.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Groups</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/save.jpg"
+              alt="#"
+              className="w-8 h-7 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Saved</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/memorie.jpg"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Memories</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/video.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Video</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/marketplace.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Marketplace</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/event.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Events</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <Image
+              src="../../../public/images/frundaiser.png"
+              alt="#"
+              className="w-8 h-8 rounded-full mr-2"
+            />
+            <div className="whitespace-nowrap font-semibold">Frundaisers</div>
+          </div>
+        </li>
+        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
+            <MdKeyboardDoubleArrowDown className="w-8 h-8 rounded-full mr-2" />
+            <div className="whitespace-nowrap font-semibold">See More</div>
+          </div>
+        </li>
+      </ul>
     </div>
   );
 };

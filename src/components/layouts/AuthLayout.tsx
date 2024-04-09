@@ -1,5 +1,5 @@
 import { useAuth } from "hooks";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 export const AuthLayout = () => {
   //const { token } = useSelector((state: RootState) => state.userService);
@@ -7,5 +7,6 @@ export const AuthLayout = () => {
   if (token) {
     return <Navigate to="/" replace />;
   }
-  return null;
+  // if !token (token == null) => return <Login/> 
+  return <Outlet/>;
 };

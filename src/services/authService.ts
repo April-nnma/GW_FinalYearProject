@@ -6,7 +6,7 @@ const api = apiInstance({
   baseURL: import.meta.env.VITE_USER_SERVICES_API,
 });
 
-export const userService = {
+export const authService = {
   register: (data: RegisterSchemaType) => api.post("/register", data),
   // giữ thông tin login khi f5 mà ko mất => lưu xuống localStorage
   login: (data: LoginSchemaType) =>
