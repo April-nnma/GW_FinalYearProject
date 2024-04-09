@@ -13,14 +13,18 @@ export class UserService {
 
   async getUser(): Promise<response> {
     const data = await this.prismaService.user.findMany();
-    data.map((item)=>{ delete item.password })
+    data.map((item) => {
+      delete item.password;
+    });
     return ResponseCode.success(data);
   }
 
-  //nhớ try catch
-  async getInfo(body: {token:string}): Promise<response> {
-    const payload= this.jwtService.decode(body.token);
-    const data = await this.prismaService.user.findFirst({where : {user_id : payload.user_id}});
+  //try catch
+  async getInfo(body: { token: string }): Promise<response> {
+    const payload = this.jwtService.decode(body.token);
+    const data = await this.prismaService.user.findFirst({
+      where: { user_id: payload.user_id },
+    });
     delete data.password;
     return ResponseCode.success(data);
   }

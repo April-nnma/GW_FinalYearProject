@@ -11,7 +11,7 @@ export class response {
 class responseCode {
   success(data?: any, code?: any, message = 'success') {
     return {
-      status: HttpStatus.OK,
+    status: HttpStatus.OK,
       code: code ? code : HttpStatus.OK,
       message: message,
       content: data,
