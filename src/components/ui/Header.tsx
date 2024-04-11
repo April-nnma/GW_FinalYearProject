@@ -173,7 +173,7 @@ export const Header = () => {
                   </PopoverTrigger>
                   <PopoverContent maxWidth="100px" maxHeight="100px">
                     <PopoverArrow />
-                    <PopoverHeader>{user?.email}</PopoverHeader>
+                    <PopoverHeader>{user?.fullName}</PopoverHeader>
                   </PopoverContent>
                 </Popover>
                 <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">

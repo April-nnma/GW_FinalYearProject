@@ -1,10 +1,9 @@
-import { RiArrowDownSLine, RiShareForwardLine } from "react-icons/ri";
 import { BiLike, BiSmile, BiWorld } from "react-icons/bi";
 import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Button, Image, Input } from "@chakra-ui/react";
+import { Button, Image } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { postService } from "services";
 import { CreatePost } from "types";
@@ -13,7 +12,7 @@ import { toast } from "react-toastify";
 export const Post = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState<CreatePost[]>([]);
-  const [showEmoji, setShowEmoji] = useState(false);
+  // const [showEmoji, setShowEmoji] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -28,7 +27,7 @@ export const Post = () => {
 
     fetchPosts();
   }, []);
-  
+
   return (
     <>
       {posts.map((post) => (
@@ -44,8 +43,10 @@ export const Post = () => {
               <div className="ml-3">
                 <p className="font-bold">{user?.fullName}username</p>
                 {/* Dynamic time here */}
-                <p className="text-xs">3 hours ago</p>
-                <BiWorld className="ml-1" />
+                <div className="flex">
+                  <p className="text-xs">3 hours ago</p>
+                  <BiWorld className="ml-1" />
+                </div>
               </div>
             </div>
             <Image

@@ -1,11 +1,25 @@
-import { Story } from "../Story/Story";
 import { Avatar } from "@chakra-ui/avatar";
-import { Button, Image, Input, Spinner, Toast } from "@chakra-ui/react";
-import { Post } from "./Post";
-import { useAuth } from "hooks";
-import { useRef, useState } from "react";
-import { useToast } from "react-toastify";
-import { postService } from "services";
+import {
+  Button,
+  Divider,
+  Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useAuth } from "hooks"; // Make sure the path to your hooks is correct
+import { useState, useEffect, useRef } from "react";
+import { BiWorld } from "react-icons/bi";
+
+interface ImageFile extends File {
+  preview: string;
+}
 
 type PostFormProps = {
   closeForm: () => void;
@@ -13,143 +27,181 @@ type PostFormProps = {
 
 export const CreatePost = () => {
   const { user } = useAuth();
-  const [title, setTitle] = useState("");
-  const [contentUrl, setContentUrl] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const titleRef = useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const finalRef = useRef(null);
+  const [imgs, setImgs] = useState<ImageFile[]>([]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const fileUrl = URL.createObjectURL(e.target.files[0]);
-      // console.log(fi)
-      // setSelectedImage(fileUrl);
+  const handlePreviewImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const filesArray: ImageFile[] = Array.from(event.target.files).map(
+        (file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+      );
+      setImgs(filesArray);
     }
   };
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  const handlePost = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const postData = {
-        user_id_create: user?.id,  // Giả định rằng user object có ID của người dùng
-        title: title,
-        content_url: contentUrl,
-      };
-      const response = await postService.createPost(postData);
+  useEffect(() => {
+    return () => imgs.forEach((img) => URL.revokeObjectURL(img.preview));
+  }, [imgs]);
 
+  const handleClick = () => {
+    const fileInput = document.querySelector("#getFile") as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
   };
+
   return (
-    <form>
-      <Story />
-      <div className="rounded-lg bg-white flex flex-col p-3 px-4 shadow">
-        <div className="flex items-center space-x-2 border-b pb-3 mb-2">
-          <div className="shrink-0">
-            <Avatar size="sm" className="mr-2" />
-          </div>
+    <div className="rounded-lg bg-white flex flex-col p-3 px-4 shadow">
+      <div className="flex items-center space-x-2 border-b pb-3 mb-2">
+        <div className="shrink-0 ml-6">
+          <Avatar size="sm" className="mr-2" />
+        </div>
 
-          <Input
-            placeholder={`What's on your mind ${user?.fullName}?`}
-            justifyContent="flex-start"
-            color="text-gray-300"
-            className="hover:bg-gray-200 focus:bg-gray-100 focus:outline-none flex-grow bg-gray-100 text-gray-400 text-left rounded-full h-10 pl-5"
-            // ref={titleRef}
-          ></Input>
+        <div className="flex-grow">
           <Button
-            isLoading
-            colorScheme="linkedin"
-            spinner={<Spinner size="sm" color="white" />}
-            // onClick={handleUploadPost}
+            onClick={onOpen}
+            justifyContent="flex-start"
+            borderRadius="4xl"
+            className="hover:bg-gray-200 focus:bg-gray-100 bg-gray-100 text-gray-400 rounded-full h-10 w-full"
           >
-            Post
+            What's on your mind, {user?.fullName}?
           </Button>
         </div>
-        {/* {showPost && <PostForm closeForm={() => setShowPost(false)} />} */}
-        <div className="flex justify-between px-3 sm:mx-9 pb-3 space-x-3 ml-96">
-          <div className="flex items-center">
-            <div className="w-7 h-7">
-              <Image src="../../../../public/images/camera.png" alt="#" />
-            </div>
-            <p className="pl-2 whitespace-nowrap text-[14px]">Live Video</p>
-          </div>
-          <div className="flex items-center">
-            <div className="w-7 h-7">
-              <Image src="../../../../public/images/picture.png" alt="#" />
-              <input type="file" className="hidden" />
-            </div>
-            <p className="pl-2 text-[14px]">Photo/Video</p>
-          </div>
+        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              Create post
+            </ModalHeader>
+            <Divider />
+            <ModalCloseButton />
+            <ModalBody>
+              <form>
+                <div className="flex items-center ml-5">
+                  <Avatar
+                    size="sm"
+                    // src={user?.avatarUrl || "path/to/default/avatar.jpg"}
+                  />
+                  <div className="ml-3">
+                    <p className="font-bold">{user?.fullName}username</p>
+                    <div className="flex">
+                      <p className="text-xs">3 hours ago</p>
+                      <BiWorld className="ml-1" />
+                    </div>
+                  </div>
+                </div>
 
-          <div className="flex items-center">
-            <div className="w-7 h-7">
-              <Image src="../../../../public/images/smile.png" alt="#" />
-            </div>
-            <p className="pl-2 text-[14px]">Feeling/Activity</p>
+                <Input
+                  type="file"
+                  id="file-input"
+                  multiple
+                  onChange={handlePreviewImg}
+                  hidden
+                />
+                {/* {imgs && (
+                  <Image
+                    mt={4}
+                    src={imgs.preview}
+                    alt="Preview"
+                    boxSize="80%"
+                    objectFit="cover"
+                  />
+                )} */}
+                <div>
+                  {imgs.map((img, index) => (
+                    <Image
+                      className="flex"
+                      key={index}
+                      mt={4}
+                      src={img.preview}
+                      alt="Preview"
+                      boxSize="80%"
+                      objectFit="cover"
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center border bg-white p-2 rounded-lg border-black">
+                  <Button
+                    className="font-semibold text-black"
+                    onClick={() =>
+                      document.getElementById("file-input").click()
+                    }
+                  >
+                    Add to your post
+                  </Button>
+                  <div className="ml-auto flex mr-3">
+                    <div className="flex items-center mr-3">
+                      <div className="w-7 h-7">
+                        <Image
+                          src="../../../../public/images/camera.png"
+                          alt="#"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-center mr-3">
+                      <div className="w-7 h-7">
+                        <Image
+                          src="../../../../public/images/picture.png"
+                          alt="#"
+                          onClick={() =>
+                            document.getElementById("file-input").click()
+                          }
+                        />
+                        <input type="file" className="hidden" />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center mr-2">
+                      <div className="w-7 h-7">
+                        <Image
+                          src="../../../../public/images/smile.png"
+                          alt="#"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" onClick={handleClick} width="100%">
+                Post
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </div>
+      {/* {showPost && <PostForm closeForm={() => setShowPost(false)} />} */}
+      <div className="flex justify-between px-3 sm:mx-9 pb-3 space-x-3 ml-96">
+        <div className="flex items-center">
+          <div className="w-7 h-7">
+            <Image src="../../../../public/images/camera.png" alt="#" />
           </div>
+          <p className="pl-2 whitespace-nowrap text-[14px]">Live Video</p>
+        </div>
+        <div className="flex items-center">
+          <div className="w-7 h-7">
+            <Image src="../../../../public/images/picture.png" alt="#" />
+            <input type="file" className="hidden" />
+          </div>
+          <p className="pl-2 text-[14px]">Photo/Video</p>
+        </div>
+
+        <div className="flex items-center">
+          <div className="w-7 h-7">
+            <Image src="../../../../public/images/smile.png" alt="#" />
+          </div>
+          <p className="pl-2 text-[14px]">Feeling/Activity</p>
         </div>
       </div>
-      <Post />
-    </form>
+    </div>
   );
 };
-
-// import React, { useState } from "react";
-// import { Story } from "../Story/Story";
-// import { Avatar } from "@chakra-ui/avatar";
-// import { Button, Input, useToast } from "@chakra-ui/react";
-// import { postService } from "services/postService"; // Đảm bảo rằng đường dẫn đúng
-// import { useAuth } from "hooks";
-// import axios from "axios";
-
-// export const CreatePostForm = () => {
-//   const { user } = useAuth();
-//   const [title, setTitle] = useState("");
-//   const [contentUrl, setContentUrl] = useState("");
-//   const [isLoading, setIsLoading] = useState(false);
-//   const toast = useToast();
-
-//   const[(formData, setFormData)] = useState({});
-
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
-
-//   // const handleSubmit = async (e: React.FormEvent) => {
-//   //   e.preventDefault();
-
-//   //   try {
-//   //     const response = await axios.post(
-//   //       "http://localhost:3000/post/createPost",
-//   //       formData
-//   //     );
-//   //     console.log("Data sent successfully:", response.data);
-//   //   } catch (error) {
-//   //     console.error("Error sending data:", error);
-//   //   }
-//   // };
-//   return (
-//     <form onSubmit={handlePost}>
-//       <Story />
-//       {/* ... các thành phần khác của form ... */}
-//       <Input
-//         value={title}
-//         onChange={(e) => setTitle(e.target.value)}
-//         placeholder={`What's on your mind, ${user?.fullName}?`}
-//         isRequired
-//         onChangeCapture={handleChange}
-//       />
-//       <Input
-//         value={contentUrl}
-//         onChange={(e) => setContentUrl(e.target.value)}
-//         placeholder="Content URL"
-//         isRequired
-//         onChangeCapture={handleChange}
-//       />
-//       <Button isLoading={isLoading} type="submit" colorScheme="blue">
-//         Post
-//       </Button>
-//     </form>
-//   );
-// };
