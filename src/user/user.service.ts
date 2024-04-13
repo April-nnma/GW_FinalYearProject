@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import ResponseCode, { response } from 'src/domain/response';
 import { JwtService } from '@nestjs/jwt';

@@ -9,9 +9,9 @@ export class response {
 }
 
 class responseCode {
-  success(data?: any, code?: any, message = 'success') {
+  success(data: any, message = 'success', code?: any) {
     return {
-    status: HttpStatus.OK,
+      status: HttpStatus.OK,
       code: code ? code : HttpStatus.OK,
       message: message,
       content: data,

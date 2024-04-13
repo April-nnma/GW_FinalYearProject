@@ -72,7 +72,12 @@ export class AuthService {
   // }
   async register(registerUserDto: registerDto): Promise<response> {
     try {
-      const { email, password, fullname, date_of_birth } = registerUserDto;
+      const {
+        email,
+        password,
+        fullName: fullname,
+        dateOfBirth: date_of_birth,
+      } = registerUserDto;
 
       // Check if the user already exists
       const existingUser = await this.prismaService.user.findFirst({
@@ -94,7 +99,7 @@ export class AuthService {
           fullname,
           email,
           password: hashedPassword,
-          date_of_birth,
+          date_of_birth: date_of_birth ? new Date(date_of_birth) : new Date(),
         },
       });
 

@@ -4,8 +4,8 @@ export interface loginDto {
 }
 
 export interface registerDto {
-  fullname: string;
+  fullName: string;
   email: string;
   password: string;
-  date_of_birth: Date;
+  dateOfBirth: Date;
 }

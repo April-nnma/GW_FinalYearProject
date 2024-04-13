@@ -1,5 +1,5 @@
 export interface createPostDto {
   user_id_create: number;
-  title: string;
-  contentUrl: string;
+  caption: string;
+  content: string;
 }

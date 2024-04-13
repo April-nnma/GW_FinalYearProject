@@ -35,9 +35,9 @@ model comment {
 model post {
   post_id        Int         @id @default(autoincrement())
   user_id_create Int
-  title          String      @db.VarChar(255)
+  content        String?     @db.VarChar(255)
   created_at     DateTime?   @default(now()) @db.Timestamp(0)
-  content_url    String      @db.VarChar(255)
+  caption        String      @db.VarChar(255)
   comment        comment[]
   user           user        @relation(fields: [user_id_create], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "post_ibfk_1")
   post_like      post_like[]
