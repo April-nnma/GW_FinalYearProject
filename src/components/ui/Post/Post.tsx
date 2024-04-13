@@ -3,7 +3,7 @@ import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Button, Image } from "@chakra-ui/react";
+import { Button, Divider, Image, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { postService } from "services";
 import { CreatePost } from "types";
@@ -12,6 +12,9 @@ import { toast } from "react-toastify";
 export const Post = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState<CreatePost[]>([]);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [comments, setComments] = useState([]);
+
   // const [showEmoji, setShowEmoji] = useState(false);
 
   useEffect(() => {
@@ -28,6 +31,9 @@ export const Post = () => {
     fetchPosts();
   }, []);
 
+  const handleLikePost = () => {
+    setHasLiked(!hasLiked);
+  };
   return (
     <>
       {posts.map((post) => (
@@ -51,28 +57,50 @@ export const Post = () => {
             </div>
             <Image
               src="../../../../public/images/dots.png"
-              alt="More options"
+              alt="#"
               className="w-10 h-10"
             />
           </div>
           <div className="m-3">
-            <p>{post.title}</p>
+            <p>{post.caption}</p>
           </div>
-          {post.content_url ? (
-            <Image
-              src={post.content_url}
-              alt="Post"
-              className="h-auto w-full"
-            />
+          {post.content ? (
+            <Image src={post.content} alt="#" className="h-auto w-full" />
           ) : (
             ""
           )}
-          <div className="flex justify-between mx-6 mt-1">
-            <div className="flex items-center">
-              <BiLike className="w-5 h-5" />
-              <p className="pl-2 text-[18px]">Like</p>
+          <div className="flex justify-between text-[#8e8d8d] mt-3 ml-4">
+            <div className="flex items-center ">
+              <div className=" w-[1.1rem] h-[1.1rem]">
+                <Image src="../../../../public/images/like.png" />
+              </div>
+              <div className="ml-[2px] w-5 h-5">
+                <Image src="../../../../public/images/heart.png" />
+              </div>
+              {/* <p className="pl-2 whitespace-nowrap  text-[15px] sm:text-[16px]">
+                {` Emily Doe and another ${likes.length}`}
+              </p> */}
             </div>
-
+            {/* <p className="whitespace-nowrap text-[15px] sm:text-[16px]">
+              {`${comments.length} Comments`}
+            </p> */}
+          </div>
+          <Divider orientation="horizontal" className="mt-3" />
+          <div className="flex justify-between mx-6 mt-1 font-medium cursor-pointer">
+            <div className="flex items-center" onClick={handleLikePost}>
+              <BiLike
+                className={`w-5 h-5 ${
+                  hasLiked ? "text-blue-700" : "text-black"
+                }`}
+              />
+              <p
+                className={`pl-2 text-[18px] ${
+                  hasLiked ? "text-blue-700" : "text-black"
+                }`}
+              >
+                Like
+              </p>
+            </div>
             <div className="flex items-center">
               <FaRegCommentAlt className="w-5 h-5" />
               <p className="pl-2">Comment</p>
@@ -87,9 +115,10 @@ export const Post = () => {
               <p className="pl-2">Share</p>
             </div>
           </div>
+          <Divider orientation="horizontal" className="mt-3" />
           <div className="max-h-60 overflow-y-auto">
             <div className="flex items-center mt-5">
-              <Avatar size="sm" className="ml-4 mt-1" />
+              <Avatar size="sm" className="ml-5 mt-0" />
               <div className="w-full ml-5 bg-[#f2f3f7] rounded-full flex items-center relative">
                 <input
                   type="text"

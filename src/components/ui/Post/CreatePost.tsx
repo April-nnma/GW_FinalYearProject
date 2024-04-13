@@ -1,5 +1,6 @@
 import { Avatar } from "@chakra-ui/avatar";
 import {
+  Box,
   Button,
   Divider,
   Image,
@@ -16,6 +17,7 @@ import {
 import { useAuth } from "hooks"; // Make sure the path to your hooks is correct
 import { useState, useEffect, useRef } from "react";
 import { BiWorld } from "react-icons/bi";
+import { postService } from "services";
 
 interface ImageFile extends File {
   preview: string;
@@ -30,6 +32,8 @@ export const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
   const [imgs, setImgs] = useState<ImageFile[]>([]);
+  const [caption, setCaption] = useState<string>("");
+  const [value, setValue] = useState(0);
 
   const handlePreviewImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -53,6 +57,104 @@ export const CreatePost = () => {
       fileInput.click();
     }
   };
+
+  // const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const formData = new FormData(event.currentTarget);
+  //   // console.log("formData: ", formData);
+  //   // const caption = formData.get("caption");
+  //   // console.log([...formData.entries()]);
+  //   const newPost = Object.fromEntries(formData);
+  //   console.log("newPost: ", newPost);
+  //   setValue(value + 1);
+  //   event.currentTarget.reset();
+  //   imgs.forEach((img, index) => {
+  //     formData.append(`image${index}`, img);
+  //   });
+  //   // try {
+  //   //   const response = await postService.createPost(formData);
+  //   //   if (response.status) {
+  //   //     console.log("Post created successfully");
+  //   //     setCaption("");
+  //   //     setImgs([]);
+  //   //     onClose();
+  //   //   } else {
+  //   //     console.error("Failed to create post:", response.message);
+  //   //   }
+  //   // } catch (error) {
+  //   //   console.error("Failed to create post:", error);
+  //   // }
+  // };
+  const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const newPostData = {
+      caption: formData.get("caption"),
+      content: formData.get("content"),
+    };
+    console.log("newPostData: ", newPostData);
+
+    const postData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPostData),
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/post/createPost",
+        postData
+      );
+      if (response.ok) {
+        console.log("Post created successfully");
+        setCaption("");
+        setImgs([]);
+        onClose();
+      } else {
+        console.error("Failed to create post:", response.status);
+      }
+    } catch (error) {
+      console.error("Failed to create post:", error);
+    }
+  };
+
+  // const renderImages = () => {
+  //   if (imgs.length >= 2) {
+  //     return (
+  //       <div style={{ display: "flex" }}>
+  //         <Image
+  //           src={imgs[0].preview}
+  //           alt="Preview"
+  //           style={{ width: "60%", height: "auto" }}
+  //         />
+  //         <div
+  //           style={{ width: "40%", display: "flex", flexDirection: "column" }}
+  //         >
+  //           {imgs.slice(1).map((img, index) => (
+  //             <Image
+  //               key={index}
+  //               src={img.preview}
+  //               alt="Preview"
+  //               style={{ width: "100%", height: "50%" }}
+  //             />
+  //           ))}
+  //         </div>
+  //       </div>
+  //     );
+  //   } else {
+  //     // Return single image or no image layout here
+  //     return imgs.map((img, index) => (
+  //       <Image
+  //         key={index}
+  //         src={img.preview}
+  //         alt="Preview"
+  //         style={{ width: "100%", height: "auto" }}
+  //       />
+  //     ));
+  //   }
+  // };
 
   return (
     <div className="rounded-lg bg-white flex flex-col p-3 px-4 shadow">
@@ -84,25 +186,61 @@ export const CreatePost = () => {
             <Divider />
             <ModalCloseButton />
             <ModalBody>
-              <form>
+              <form onSubmit={handlePost}>
                 <div className="flex items-center ml-5">
                   <Avatar
                     size="sm"
                     // src={user?.avatarUrl || "path/to/default/avatar.jpg"}
                   />
                   <div className="ml-3">
-                    <p className="font-bold">{user?.fullName}username</p>
-                    <div className="flex">
+                    <p className="font-semibold">{user?.fullName}username</p>
+                    {/* <div className="flex">
                       <p className="text-xs">3 hours ago</p>
                       <BiWorld className="ml-1" />
-                    </div>
+                    </div> */}
+                    <Box
+                      className="flex items-center justify-center"
+                      as="button"
+                      height="24px"
+                      lineHeight="1.2"
+                      transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+                      border="1px"
+                      px="8px"
+                      borderRadius="2px"
+                      fontSize="14px"
+                      fontWeight="semibold"
+                      bg="#f5f6f7"
+                      borderColor="#ccd0d5"
+                      color="#4b4f56"
+                      _hover={{ bg: "#ebedf0" }}
+                      _active={{
+                        bg: "#dddfe2",
+                        transform: "scale(0.98)",
+                        borderColor: "#bec3c9",
+                      }}
+                      _focus={{
+                        boxShadow:
+                          "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
+                      }}
+                    >
+                      <BiWorld className="mr-1" />
+                      <span className="">Public</span>
+                    </Box>
                   </div>
                 </div>
+                <Input
+                  id="caption"
+                  name="caption"
+                  variant="unstyled"
+                  placeholder={`What's on your mind, ${user?.fullName}?`}
+                  className="mb-10"
+                />
 
                 <Input
+                  className="flex justify-center items-center"
                   type="file"
+                  name="content"
                   id="file-input"
-                  multiple
                   onChange={handlePreviewImg}
                   hidden
                 />
@@ -117,14 +255,12 @@ export const CreatePost = () => {
                 )} */}
                 <div>
                   {imgs.map((img, index) => (
-                    <Image
+                    <img
                       className="flex"
                       key={index}
-                      mt={4}
-                      src={img.preview}
-                      alt="Preview"
-                      boxSize="80%"
-                      objectFit="cover"
+                      src={URL.createObjectURL(img)}
+                      alt="#"
+                      style={{ maxWidth: "100%", height: "auto" }}
                     />
                   ))}
                 </div>
@@ -169,13 +305,17 @@ export const CreatePost = () => {
                     </div>
                   </div>
                 </div>
+                <Button
+                  type="submit"
+                  colorScheme="messenger"
+                  width="100%"
+                  className="mt-4"
+                >
+                  Post
+                </Button>
               </form>
             </ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" onClick={handleClick} width="100%">
-                Post
-              </Button>
-            </ModalFooter>
+            <ModalFooter></ModalFooter>
           </ModalContent>
         </Modal>
       </div>

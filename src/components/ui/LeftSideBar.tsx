@@ -6,9 +6,9 @@ import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 export const LeftSideBar = () => {
   const { user } = useAuth();
   return (
-    <div className="w-[22.5rem] h-auto py-3">
-      <ul className="w-full text-gray-600">
-        <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
+    <div className="w-[22.5rem] h-auto py-4">
+      <ul className="w-full text-gray-600 cursor-pointer ">
+        <li className="h-12 mb-2 flex items-center justify-content space-x-2 p-2 rounded-md">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Avatar size="sm" />
             <div className="whitespace-nowrap ml-2 font-medium">
