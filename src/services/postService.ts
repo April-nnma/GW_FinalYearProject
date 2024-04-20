@@ -9,8 +9,18 @@ export const postService = {
     api
       .get<ApiResponse<CreatePost[]>>("/getPost")
       .then((response) => response.data),
-  createPost: async (data: CreatePost): Promise<ApiResponse<any>> => {
-    const response = await api.post<ApiResponse<any>>("/createPost", data);
+  createPost: async (data: FormData): Promise<ApiResponse<CreatePost>> => {
+    console.log(data);
+    const response = await api.post<ApiResponse<CreatePost>>(
+      "/createPost",
+      data
+    );
+    return response.data;
+  },
+  deletePost: async (postId: number): Promise<ApiResponse<void>> => {
+    const response = await api.delete<ApiResponse<void>>(
+      `/deletePost/${postId}`
+    );
     return response.data;
   },
 };

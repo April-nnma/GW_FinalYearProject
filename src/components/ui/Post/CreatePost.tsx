@@ -17,8 +17,15 @@ import {
 import { useAuth } from "hooks"; // Make sure the path to your hooks is correct
 import { useState, useEffect, useRef } from "react";
 import { BiWorld } from "react-icons/bi";
-import { postService } from "services";
-
+import { toast } from "react-toastify";
+import { postService, userService } from "services";
+import EmojiPicker from "emoji-picker-react";
+import {
+  AiOutlineClose,
+  AiOutlineLoading,
+  AiOutlinePlus,
+} from "react-icons/ai";
+import { sleep } from "utils";
 interface ImageFile extends File {
   preview: string;
 }
@@ -33,7 +40,7 @@ export const CreatePost = () => {
   const finalRef = useRef(null);
   const [imgs, setImgs] = useState<ImageFile[]>([]);
   const [caption, setCaption] = useState<string>("");
-  const [value, setValue] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePreviewImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -58,103 +65,34 @@ export const CreatePost = () => {
     }
   };
 
-  // const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-  //   const formData = new FormData(event.currentTarget);
-  //   // console.log("formData: ", formData);
-  //   // const caption = formData.get("caption");
-  //   // console.log([...formData.entries()]);
-  //   const newPost = Object.fromEntries(formData);
-  //   console.log("newPost: ", newPost);
-  //   setValue(value + 1);
-  //   event.currentTarget.reset();
-  //   imgs.forEach((img, index) => {
-  //     formData.append(`image${index}`, img);
-  //   });
-  //   // try {
-  //   //   const response = await postService.createPost(formData);
-  //   //   if (response.status) {
-  //   //     console.log("Post created successfully");
-  //   //     setCaption("");
-  //   //     setImgs([]);
-  //   //     onClose();
-  //   //   } else {
-  //   //     console.error("Failed to create post:", response.message);
-  //   //   }
-  //   // } catch (error) {
-  //   //   console.error("Failed to create post:", error);
-  //   // }
-  // };
   const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const newPostData = {
-      caption: formData.get("caption"),
-      content: formData.get("content"),
-    };
-    console.log("newPostData: ", newPostData);
-
-    const postData = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPostData),
-    };
-
     try {
-      const response = await fetch(
-        "http://localhost:3000/post/createPost",
-        postData
-      );
-      if (response.ok) {
-        console.log("Post created successfully");
-        setCaption("");
-        setImgs([]);
-        onClose();
-      } else {
-        console.error("Failed to create post:", response.status);
+      setIsLoading(true);
+      event.preventDefault();
+      if (imgs.length && user) {
+        console.log("user fff: ", user);
+        console.log(imgs);
+        const formData = new FormData();
+        formData.append("user_id_create", user.user_id.toString());
+        imgs.map((img) => formData.append("file", img));
+        formData.append("caption", caption);
+        console.log("newPostData: ", formData);
+        await sleep();
+        const response = await postService.createPost(formData);
+        console.log("response: ", response);
+        if (response) {
+          toast("Post created successfully");
+          setImgs([]);
+          setCaption("");
+          onClose();
+        }
       }
+      setIsLoading(false);
     } catch (error) {
-      console.error("Failed to create post:", error);
+      console.error("Error while posting:", error);
+    } finally {
     }
   };
-
-  // const renderImages = () => {
-  //   if (imgs.length >= 2) {
-  //     return (
-  //       <div style={{ display: "flex" }}>
-  //         <Image
-  //           src={imgs[0].preview}
-  //           alt="Preview"
-  //           style={{ width: "60%", height: "auto" }}
-  //         />
-  //         <div
-  //           style={{ width: "40%", display: "flex", flexDirection: "column" }}
-  //         >
-  //           {imgs.slice(1).map((img, index) => (
-  //             <Image
-  //               key={index}
-  //               src={img.preview}
-  //               alt="Preview"
-  //               style={{ width: "100%", height: "50%" }}
-  //             />
-  //           ))}
-  //         </div>
-  //       </div>
-  //     );
-  //   } else {
-  //     // Return single image or no image layout here
-  //     return imgs.map((img, index) => (
-  //       <Image
-  //         key={index}
-  //         src={img.preview}
-  //         alt="Preview"
-  //         style={{ width: "100%", height: "auto" }}
-  //       />
-  //     ));
-  //   }
-  // };
 
   return (
     <div className="rounded-lg bg-white flex flex-col p-3 px-4 shadow">
@@ -170,7 +108,7 @@ export const CreatePost = () => {
             borderRadius="4xl"
             className="hover:bg-gray-200 focus:bg-gray-100 bg-gray-100 text-gray-400 rounded-full h-10 w-full"
           >
-            What's on your mind, {user?.fullName}?
+            What's on your mind, {user?.fullname}?
           </Button>
         </div>
         <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
@@ -193,7 +131,7 @@ export const CreatePost = () => {
                     // src={user?.avatarUrl || "path/to/default/avatar.jpg"}
                   />
                   <div className="ml-3">
-                    <p className="font-semibold">{user?.fullName}username</p>
+                    <p className="font-semibold">{user?.fullname}</p>
                     {/* <div className="flex">
                       <p className="text-xs">3 hours ago</p>
                       <BiWorld className="ml-1" />
@@ -228,14 +166,21 @@ export const CreatePost = () => {
                     </Box>
                   </div>
                 </div>
-                <Input
-                  id="caption"
-                  name="caption"
-                  variant="unstyled"
-                  placeholder={`What's on your mind, ${user?.fullName}?`}
-                  className="mb-10"
-                />
-
+                <div>
+                  <Input
+                    id="caption"
+                    name="caption"
+                    value={caption}
+                    variant="unstyled"
+                    multiple
+                    placeholder={`What's on your mind, ${user?.fullname}?`}
+                    className="mb-10"
+                    onChange={(e) => {
+                      setCaption(e.target.value);
+                    }}
+                  />
+    
+                </div>
                 <Input
                   className="flex justify-center items-center"
                   type="file"
@@ -244,15 +189,6 @@ export const CreatePost = () => {
                   onChange={handlePreviewImg}
                   hidden
                 />
-                {/* {imgs && (
-                  <Image
-                    mt={4}
-                    src={imgs.preview}
-                    alt="Preview"
-                    boxSize="80%"
-                    objectFit="cover"
-                  />
-                )} */}
                 <div>
                   {imgs.map((img, index) => (
                     <img
@@ -310,8 +246,19 @@ export const CreatePost = () => {
                   colorScheme="messenger"
                   width="100%"
                   className="mt-4"
+                  //isLoading={isLoading}
                 >
-                  Post
+                  {isLoading ? (
+                    <>
+                      <AiOutlineLoading className="text-white animate-spin" />
+                      {" Posting"}
+                    </>
+                  ) : (
+                    <>
+                      <AiOutlinePlus className="text-white" />
+                      {" Post"}
+                    </>
+                  )}
                 </Button>
               </form>
             </ModalBody>

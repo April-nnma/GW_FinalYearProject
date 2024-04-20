@@ -9,9 +9,13 @@ export const MainLayout = () => {
   }
   return (
     <main>
-      <Header />
-      <Feed />
-      <Outlet />
+      <header className="fixed top-0 left-0 w-full z-10 bg-white">
+        <Header />
+      </header>
+      <div className="mt-20">
+        <Feed />
+        <Outlet />
+      </div>
     </main>
   );
 };

@@ -1,7 +1,7 @@
 export type CreatePost = {
-  id: number;
+  post_id: number;
   user_id_create: number;
-  caption: string;
   created_at: string;
   content: string;
+  caption: string;
 };

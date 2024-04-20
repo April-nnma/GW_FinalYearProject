@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <form>
-      <div className="p-4 flex items-center justify-between border-b lg:px-10">
+      <div className="p-4 flex items-center justify-between border-b lg:px-10 ">
         {/* Left */}
         <div className="flex items-center mr-4">
           <div className="w-10 h-10 sm:h-10 sm:w-10">
@@ -171,9 +171,11 @@ export const Header = () => {
                       <AvatarBadge boxSize="0.75em" bg="green.500" />
                     </Avatar>
                   </PopoverTrigger>
-                  <PopoverContent maxWidth="100px" maxHeight="100px">
+                  <PopoverContent maxWidth="150px" maxHeight="100px">
                     <PopoverArrow />
-                    <PopoverHeader>{user?.email}</PopoverHeader>
+                    <PopoverHeader className="text-center">
+                      {user?.fullname}
+                    </PopoverHeader>
                   </PopoverContent>
                 </Popover>
                 <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">

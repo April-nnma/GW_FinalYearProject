@@ -3,41 +3,84 @@ import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Button, Divider, Image, Input } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Button, Divider, Image } from "@chakra-ui/react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { postService } from "services";
 import { CreatePost } from "types";
-import { toast } from "react-toastify";
+import { getPostsThunk, postServiceActions } from "store/postService";
+import { RootState, useAppDispatch } from "store";
+import { useSelector } from "react-redux";
+import { HiXMark } from "react-icons/hi2";
 
 export const Post = () => {
   const { user } = useAuth();
-  const [posts, setPosts] = useState<CreatePost[]>([]);
   const [hasLiked, setHasLiked] = useState(false);
+  const [posts, setPosts] = useState<CreatePost[]>([]);
   const [comments, setComments] = useState([]);
-
-  // const [showEmoji, setShowEmoji] = useState(false);
-
+  const [showEmoji, setShowEmoji] = useState(false);
+  const dispatch = useAppDispatch();
+  const { postsList, isFetchingPosts } = useSelector(
+    (state: RootState) => state.postService
+  );
+  console.log("postsList: ", postsList);
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await postService.getPost();
-        setPosts(response.content);
-      } catch (error) {
-        console.error("Failed to fetch posts:", error);
-        toast.error("Unable to load posts at this time.");
-      }
-    };
+    dispatch(getPostsThunk());
+  }, [dispatch]);
+  if (isFetchingPosts) {
+    return <div className="text-center">Loading...</div>;
+  }
 
-    fetchPosts();
-  }, []);
+  if (!postsList || postsList.length === 0) {
+    return <div className="tex-center">No posts to display</div>;
+  }
+
+  // const fetchPosts = useCallback(async () => {
+  //   try {
+  //     const response = await postService.getPost();
+  //     setPosts(response.content);
+  //   } catch (error) {
+  //     console.error("Failed to fetch posts:", error);
+  //     toast.error("Unable to load posts at this time.");
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, [fetchPosts]);
+  // const fetchPosts = useCallback(async () => {
+  //   try {
+  //     const response = await postService.getPost();
+  //     dispatch(response.content);
+  //   } catch (error) {
+  //     console.error("Failed to fetch posts:", error);
+  //     toast.error("Unable to load posts at this time.");
+  //   }
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, [fetchPosts]);
 
   const handleLikePost = () => {
     setHasLiked(!hasLiked);
   };
+  const handleDeletePost = async (postId: number) => {
+    try {
+      await postService.deletePost(postId);
+      dispatch(postServiceActions.deletePost(postId));
+      console.log("Post deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
   return (
     <>
-      {posts.map((post) => (
-        <div key={post.id} className="bg-white rounded-[1rem] px-5 py-4 mt-4">
+      {postsList.map((post) => (
+        <div
+          key={post.post_id}
+          className="bg-white flex flex-col rounded-[1rem] px-5 py-4 mt-4 "
+        >
           {/* Post Header */}
           <div className="flex items-center justify-between">
             {/* User info */}
@@ -47,19 +90,26 @@ export const Post = () => {
                 // src={user?.avatarUrl || "path/to/default/avatar.jpg"}
               />
               <div className="ml-3">
-                <p className="font-bold">{user?.fullName}username</p>
-                {/* Dynamic time here */}
+                <p className="font-bold">{user?.fullname}</p>
                 <div className="flex">
-                  <p className="text-xs">3 hours ago</p>
+                  <p className="text-xs">{post?.created_at}</p>
                   <BiWorld className="ml-1" />
                 </div>
               </div>
             </div>
-            <Image
-              src="../../../../public/images/dots.png"
-              alt="#"
-              className="w-10 h-10"
-            />
+            <div className="flex">
+              <Image
+                src="../../../../public/images/dots.png"
+                alt="#"
+                className="w-9 h-10"
+              />
+              <HiXMark
+                className="mt-3 w-full h-full"
+                onClick={() => {
+                  handleDeletePost(post.post_id);
+                }}
+              />
+            </div>
           </div>
           <div className="m-3">
             <p>{post.caption}</p>

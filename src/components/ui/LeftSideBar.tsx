@@ -12,7 +12,7 @@ export const LeftSideBar = () => {
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Avatar size="sm" />
             <div className="whitespace-nowrap ml-2 font-medium">
-              {user?.fullName} username
+              {user?.fullname}
             </div>
           </div>
         </li>

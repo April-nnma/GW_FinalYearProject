@@ -1,9 +1,7 @@
 export type UserLogin = {
-  id: number;
-  fullName: string;
+  user_id: number;
+  fullname: string;
   email: string;
   password: string;
   token: string;
 };
-
-

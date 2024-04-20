@@ -1,8 +1,11 @@
+import { RootState, useAppDispatch } from 'store'
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+
+
+
 export const HomeTemplate = () => {
-  // const dispatch = useDispatch
-  // useEffect(()=>{
-  //   dispatch()
-  // })
+  
   return <div></div>;
 };
 
