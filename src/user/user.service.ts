@@ -19,12 +19,12 @@ export class UserService {
   }
 
   //try catch
-  async getInfo(body: { token: string }): Promise<response> {
-    const payload = this.jwtService.decode(body.token);
+  async getInfo(userId: string): Promise<response> {
     const data = await this.prismaService.user.findFirst({
-      where: { user_id: payload.user_id },
+      where: { user_id: Number(userId) },
     });
     delete data.password;
     return ResponseCode.success(data);
   }
 }
+

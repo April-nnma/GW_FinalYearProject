@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/jwt/auth.guard';
-
+import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiBearerAuth()
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
   @UseGuards(AuthGuard)
   @Get('getUser')
   async getUser() {
@@ -14,16 +16,8 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Post('getInfo')
-  async getInfo(@Body() body: { token: string }) {
-    return this.userService.getInfo(body);
+  async getInfo(@GetCurrentUserId() userId: string) {
+    //console.log("userId: ", userId);
+    return this.userService.getInfo(userId);
   }
-
-  // @Get('profile')
-  // @UseGuards(AuthGuard)
-  // async getUserByToken(@Request() req) {
-  //   if (!req.user) {
-  //     throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-  //   }
-  //   return this.userService.getUserByToken(req.user.userId);
-  // }
 }
