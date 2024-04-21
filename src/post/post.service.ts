@@ -46,11 +46,13 @@ export class PostService {
     try {
       const data: {
         user_id_create: number;
+        fullname_create: string;
         caption: string;
         content: string;
         created_at: Date;
       } = {
         user_id_create: Number(user_id_create),
+        fullname_create: userExists.fullname,
         caption: caption || '',
         content: content || '',
         created_at: new Date(),

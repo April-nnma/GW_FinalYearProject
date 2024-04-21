@@ -1,18 +1,16 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PostLike } from './post_like.entity';
 
 @Injectable()
 export class PostLikeService {
-  private readonly logger = new Logger(PostLikeService.name);
-
   constructor(
     @InjectRepository(PostLike)
     private postLikeRepository: Repository<PostLike>,
   ) {}
 
-  async getPostLikes(postId: number) {
+  async getPostLikes(postId: number): Promise<PostLike[]> {
     try {
       const postLikes = await this.postLikeRepository.find({
         where: { post_id: postId },
@@ -23,7 +21,7 @@ export class PostLikeService {
     }
   }
 
-  async createPostLike(userId: number, postId: number) {
+  async createPostLike(userId: number, postId: number): Promise<PostLike> {
     try {
       const postLike = this.postLikeRepository.create({
         user_id: userId,
@@ -35,6 +33,7 @@ export class PostLikeService {
       throw new NotFoundException('Failed to create post like');
     }
   }
+
   async deletePostLike(likeId: number) {
     try {
       const postLike = await this.postLikeRepository.findOne({

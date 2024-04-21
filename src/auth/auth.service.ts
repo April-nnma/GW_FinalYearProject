@@ -32,6 +32,8 @@ export class AuthService {
 
       return ResponseCode.success({
         token: await this.jwtService.signAsync(userCheck),
+        user_id: userCheck.user_id,
+        fullname: userCheck.fullname,
       });
     } catch (err) {
       throw new BadRequestException();
