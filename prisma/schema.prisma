@@ -8,24 +8,24 @@ datasource db {
 }
 
 model user {
-  user_id       Int            @id @default(autoincrement())
-  fullname      String?        @db.VarChar(255)
-  email         String?        @db.VarChar(255)
-  date_of_birth DateTime?      @db.Date
-  password      String?        @db.VarChar(255)
+  user_id       Int       @id @default(autoincrement())
+  fullname      String?   @db.VarChar(255)
+  email         String?   @db.VarChar(255)
+  date_of_birth DateTime? @db.Date
+  password      String?   @db.VarChar(255)
   comment       comment[]
-  notification  notification[]
   post          post[]
   react         react[]
 }
 
 model comment {
-  comment_id Int    @id @default(autoincrement())
-  user_id    Int
-  post_id    Int
-  message    String @db.VarChar(255)
-  user       user   @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_1")
-  post       post   @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_2")
+  comment_id       Int    @id @default(autoincrement())
+  user_id          Int
+  post_id          Int
+  message          String @db.VarChar(255)
+  fullname_comment String @db.VarChar(255)
+  user             user   @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_1")
+  post             post   @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction, map: "comment_ibfk_2")
 
   @@index([post_id], map: "post_id")
   @@index([user_id], map: "user_id")
@@ -54,16 +54,6 @@ model react {
   post     post?   @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction, map: "react_ibfk_2")
 
   @@index([post_id], map: "post_id")
-  @@index([user_id], map: "user_id")
-}
-
-model notification {
-  notification_id Int    @id @default(autoincrement())
-  user_id         Int
-  title           String @db.VarChar(50)
-  message         String @db.VarChar(255)
-  user            user   @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "notification_ibfk_1")
-
   @@index([user_id], map: "user_id")
 }
 

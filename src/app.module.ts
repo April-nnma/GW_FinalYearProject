@@ -8,6 +8,8 @@ import { ReactModule } from './react/react.module';
 import { PostLikeModule } from './post_like/post_like.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostLike } from './post_like/post_like.entity';
+import { CommentModule } from './comment/comment.module';
+import { Comment } from './comment/comment.entity';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { PostLike } from './post_like/post_like.entity';
     PostModule,
     ReactModule,
     PostLikeModule,
+    CommentModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',
@@ -24,7 +27,7 @@ import { PostLike } from './post_like/post_like.entity';
       username: 'root',
       password: '123456',
       database: 'gwfinal',
-      entities: [PostLike],
+      entities: [PostLike, Comment],
       synchronize: true,
     }),
   ],
