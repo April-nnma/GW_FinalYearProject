@@ -1,12 +1,9 @@
-import { RootState, useAppDispatch } from 'store'
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
-
-
+import { Feed } from "../ui/Feed";
 
 export const HomeTemplate = () => {
-  
-  return <div></div>;
+  return (
+    <div>
+      <Feed />
+    </div>
+  );
 };
-
-export default HomeTemplate;

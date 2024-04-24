@@ -1,18 +1,18 @@
 import { apiInstance } from "constant/apiInstance";
+import { PostLike } from "types";
 
-// Tạo một instance của API từ `apiInstance`
 const api = apiInstance({
-  baseURL: import.meta.env.VITE_LIKE_SERVICE_API,
+  baseURL: import.meta.env.VITE_LIKE_SERVICES_API,
 });
 
 export const likeService = {
-  getPostLikes: (postId) => {
-    return api.get(`/post-like/${postId}`);
+  getLikesByUserAndPost: (userId: number, postId: number) => {
+    return api.get<PostLike[]>(`/${userId}/${postId}`);
   },
-  addPostLike: (userId, postId) => {
-    return api.post(`/post-like/${userId}/${postId}`);
+  createPostLike: (userId: number, postId: number) => {
+    return api.post(`/${userId}/${postId}`);
   },
-  deletePostLike: (likeId) => {
-    return api.delete(`/post-like/${likeId}`);
+  deletePostLike: (likeId: number) => {
+    return api.delete(`/${likeId}`);
   },
 };

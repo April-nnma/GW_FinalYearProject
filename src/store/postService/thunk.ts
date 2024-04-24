@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { likeService } from "services/likeService";
 import { postService } from "services/postService";
 
 export const getPostsThunk = createAsyncThunk(
@@ -13,10 +14,17 @@ export const getPostsThunk = createAsyncThunk(
   }
 );
 
-// export const createPostAsync = createAsyncThunk(
-//   "postService/createPost",
-//   async (postData: FormData) => {
-//     const newPost = await postService.createPost(postData);
-//     return newPost;
-//   }
-// );
+export const getPostsLikeThunk = createAsyncThunk(
+  "likeService/getLikesByUserAndPost",
+  async (
+    { userId, postId }: { userId: number; postId: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await likeService.getLikesByUserAndPost(userId, postId);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

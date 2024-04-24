@@ -1,5 +1,5 @@
 import { useAuth } from "hooks";
-import { Feed, Header } from "../../components";
+import { Header } from "../../components";
 import { Navigate, Outlet } from "react-router-dom";
 
 export const MainLayout = () => {
@@ -13,7 +13,6 @@ export const MainLayout = () => {
         <Header />
       </header>
       <div className="mt-20">
-        <Feed />
         <Outlet />
       </div>
     </main>

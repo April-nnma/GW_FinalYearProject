@@ -1,34 +1,33 @@
-import { BiLike, BiSmile, BiWorld } from "react-icons/bi";
-import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
-import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
+import { useSelector } from "react-redux";
+import { BiLike, BiWorld } from "react-icons/bi";
+import { Avatar } from "@chakra-ui/avatar";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Button, Divider, Image, Card } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { Divider, Image, Card } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { likeService, postService } from "services";
+import { toast } from "react-toastify";
 import { CreatePost } from "types";
 import { getPostsThunk, postServiceActions } from "store/postService";
 import { RootState, useAppDispatch } from "store";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { HiXMark } from "react-icons/hi2";
 
-export const Post = () => {
+interface PostsViewProps {
+  postsView?: CreatePost;
+}
+export const PostsView: React.FC<PostsViewProps> = () => {
   const { user } = useAuth();
+  const [comments, setComments] = useState([]);
   const [postLikes, setPostLikes] = useState<{ [postId: number]: boolean }>({});
   const [posts, setPosts] = useState<CreatePost[]>([]);
-  const [comments, setComments] = useState([]);
   const dispatch = useAppDispatch();
 
   const { postsList, isFetchingPosts } = useSelector(
     (state: RootState) => state.postService
   );
-  const { likes } = useSelector((state: RootState) => state.likeService);
-
-  useEffect(() => {
-    dispatch(getPostsThunk());
-  }, [dispatch]);
-
+  const filteredPosts = postsList.filter(
+    (post) => post.user_id_create === user.user_id
+  );
   useEffect(() => {
     const handlePostCreated = () => {
       dispatch(getPostsThunk());
@@ -38,14 +37,12 @@ export const Post = () => {
       document.removeEventListener("postCreated", handlePostCreated);
     };
   }, [dispatch]);
-
   if (isFetchingPosts) {
     return <div className="text-center">Loading...</div>;
   }
-  if (!postsList || postsList.length === 0) {
-    return <div className="tex-center">No posts to display</div>;
+  if (!filteredPosts || filteredPosts.length === 0) {
+    return <div className="text-center">No posts to display</div>;
   }
-
   const handleLikePost = async (postId: number, userId: number) => {
     try {
       const response = await likeService.getLikesByUserAndPost(userId, postId);
@@ -107,38 +104,28 @@ export const Post = () => {
       console.error("Error:", error);
     }
   };
-
   const handleDeletePost = async (postId: number) => {
     try {
-      const post = postsList.find((post) => post.post_id === postId);
-      if (post && post.user_id_create === user.user_id) {
-        await postService.deletePost(postId);
-        dispatch(postServiceActions.deletePost(postId));
-        toast.success("Post deleted successfully!");
-        setPosts(postsList.filter((p) => p.post_id !== postId));
-        console.log("Post deleted successfully!");
-      } else {
-        toast.error("Don't delete this post");
-        console.log("You are not authorized to delete this post.");
-      }
+      await postService.deletePost(postId);
+      dispatch(postServiceActions.deletePost(postId));
+      console.log("Post deleted successfully!");
     } catch (error) {
       console.error("Error deleting post:", error);
     }
   };
-
   return (
     <>
-      {postsList
+      {filteredPosts
         .slice()
         .reverse()
         .map((post) => (
           <Card
             key={post.post_id}
-            className="bg-white flex flex-col rounded-[1rem] px-5 py-4 mt-4"
+            className="bg-white flex flex-col rounded-[1rem] px-5 py-4 mt-4 "
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center ml-5">
-                <Avatar size="sm" />
+                <Avatar size="sm" src="https://random.imagecdn.app/250/250" />
                 <div className="ml-3">
                   <p className="font-bold">{post?.fullname_create}</p>
                   <div className="flex">
@@ -164,8 +151,10 @@ export const Post = () => {
             <div className="m-3">
               <p>{post.caption}</p>
             </div>
-            {post.content && (
+            {post.content ? (
               <Image src={post.content} alt="#" className="h-auto w-full" />
+            ) : (
+              ""
             )}
             <div className="flex justify-between text-[#8e8d8d] mt-3 ml-4">
               <div className="flex items-center ">
@@ -225,32 +214,6 @@ export const Post = () => {
                 />
 
                 <p className="pl-2">Share</p>
-              </div>
-            </div>
-            <Divider orientation="horizontal" mt={3} borderColor="gray.300" />
-            <div className="max-h-60 overflow-y-auto">
-              <div className="flex items-center mt-5">
-                <Avatar size="sm" className="ml-5 mt-0" />
-                <div className="w-full ml-5 bg-[#f2f3f7] rounded-full flex items-center relative">
-                  <input
-                    type="text"
-                    placeholder="Write a comment"
-                    className="outline-none p-2 rounded-full w-full bg-[#f2f3f7]"
-                  />
-                  <div className="flex absolute right-[4.5rem] space-x-2 text-[#8e8d8d]">
-                    <BiSmile />
-                    <AiOutlineCamera />
-                    <AiOutlineGif />
-                  </div>
-                  <Button
-                    colorScheme="twitter"
-                    borderRadius="full"
-                    size="xs"
-                    className="mr-5"
-                  >
-                    Post
-                  </Button>
-                </div>
               </div>
             </div>
           </Card>

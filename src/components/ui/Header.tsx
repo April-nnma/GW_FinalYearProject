@@ -162,39 +162,37 @@ export const Header = () => {
               </span>
             </p>
           )}
-          {!!token && (
-            <div className="col-span-2 flex items-center justify-end">
-              <div className="h-10 w-auto flex items-center space-x-3 pr-2 ">
-                <Popover>
-                  <PopoverTrigger>
-                    <Avatar boxSize="9">
-                      <AvatarBadge boxSize="0.75em" bg="green.500" />
-                    </Avatar>
-                  </PopoverTrigger>
-                  <PopoverContent maxWidth="150px" maxHeight="100px">
-                    <PopoverArrow />
-                    <PopoverHeader className="text-center">
-                      {user?.fullname}
-                    </PopoverHeader>
-                  </PopoverContent>
-                </Popover>
-                <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">
-                  <FaFacebookMessenger className="ml-3" />
-                </button>
-                <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">
-                  <FaBell className="ml-3" />
-                </button>
-                <button
-                  className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full"
-                  onClick={() => {
-                    dispatch(authServiceActions.logOut("abc"));
-                  }}
-                >
-                  <IoIosLogOut className="ml-3" />
-                </button>
-              </div>
+          <div className="col-span-2 flex items-center justify-end">
+            <div className="h-10 w-auto flex items-center space-x-3 pr-2 ">
+              <Popover>
+                <PopoverTrigger>
+                  <Avatar boxSize="9" src="https://random.imagecdn.app/250/250">
+                    <AvatarBadge boxSize="0.75em" bg="green.500" />
+                  </Avatar>
+                </PopoverTrigger>
+                <PopoverContent maxWidth="150px" maxHeight="100px">
+                  <PopoverArrow />
+                  <PopoverHeader className="text-center">
+                    {user?.fullname}
+                  </PopoverHeader>
+                </PopoverContent>
+              </Popover>
+              <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">
+                <FaFacebookMessenger className="ml-3" />
+              </button>
+              <button className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full">
+                <FaBell className="ml-3" />
+              </button>
+              <button
+                className="w-10 h-10 bg-gray-200 focus:outline-none hover:bg-gray-300 rounded-full"
+                onClick={() => {
+                  dispatch(authServiceActions.logOut("abc"));
+                }}
+              >
+                <IoIosLogOut className="ml-3" />
+              </button>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </form>

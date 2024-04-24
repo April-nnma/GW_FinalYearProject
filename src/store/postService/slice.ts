@@ -5,10 +5,10 @@ import { getPostsThunk } from "./thunk";
 type PostServiceInitialState = {
   postsList?: CreatePost[];
   isFetchingPosts?: boolean;
-  
 };
 
-const initialState: PostServiceInitialState = {};
+const initialState: PostServiceInitialState = {
+};
 
 const postServiceSlice = createSlice({
   name: "postService",
@@ -35,7 +35,6 @@ const postServiceSlice = createSlice({
         state.postsList = payload;
         state.isFetchingPosts = false;
       })
-
       .addCase(getPostsThunk.rejected, (state) => {
         state.isFetchingPosts = false;
       });

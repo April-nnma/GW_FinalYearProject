@@ -14,26 +14,17 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAuth } from "hooks"; // Make sure the path to your hooks is correct
+import { useAuth } from "hooks";
 import { useState, useEffect, useRef } from "react";
 import { BiWorld } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { postService, userService } from "services";
-import EmojiPicker from "emoji-picker-react";
-import {
-  AiOutlineClose,
-  AiOutlineLoading,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { postService } from "services";
+import { FaRegCircleXmark } from "react-icons/fa6";
+import { AiOutlineLoading, AiOutlinePlus } from "react-icons/ai";
 import { sleep } from "utils";
 interface ImageFile extends File {
   preview: string;
 }
-
-type PostFormProps = {
-  closeForm: () => void;
-};
-
 export const CreatePost = () => {
   const { user } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,41 +55,74 @@ export const CreatePost = () => {
       fileInput.click();
     }
   };
+  const isImageSizeValid = (file: File) => {
+    const minSize = 10;
+    const maxSize = 10 * 1024 * 1024;
 
-  const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
+    return file.size >= minSize && file.size <= maxSize;
+  };
+
+  const handlePost = async (event) => {
     try {
       setIsLoading(true);
       event.preventDefault();
-      if (imgs.length && user) {
-        console.log("user fff: ", user);
-        console.log(imgs);
+      if (user) {
+        // Nếu có hình ảnh được chọn
+        if (imgs.length > 0) {
+          const isSizeValid = imgs.every(isImageSizeValid);
+          if (!isSizeValid) {
+            toast.error(
+              "Image size is too large. Please choose another image."
+            );
+            return;
+          }
+        }
+
         const formData = new FormData();
         formData.append("user_id_create", user.user_id.toString());
-        imgs.map((img) => formData.append("file", img));
+
+        // Nếu có hình ảnh được chọn thì thêm vào formData
+        if (imgs.length > 0) {
+          imgs.map((img) => formData.append("file", img));
+        }
+
+        // Thêm caption vào formData
         formData.append("caption", caption);
-        console.log("newPostData: ", formData);
+
         await sleep();
         const response = await postService.createPost(formData);
-        console.log("response: ", response);
         if (response) {
           toast("Post created successfully");
           setImgs([]);
           setCaption("");
+          document.dispatchEvent(new Event("postCreated"));
           onClose();
         }
+      } else {
+        toast.error("User information is missing. Please try again later.");
       }
-      setIsLoading(false);
     } catch (error) {
       console.error("Error while posting:", error);
     } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleRemoveImage = (index) => {
+    const newImgs = [...imgs];
+    newImgs.splice(index, 1);
+    setImgs(newImgs);
   };
 
   return (
     <div className="rounded-lg bg-white flex flex-col p-3 px-4 shadow">
       <div className="flex items-center space-x-2 border-b pb-3 mb-2">
         <div className="shrink-0 ml-6">
-          <Avatar size="sm" className="mr-2" />
+          <Avatar
+            size="sm"
+            className="mr-2"
+            src="https://random.imagecdn.app/250/250"
+          />
         </div>
 
         <div className="flex-grow">
@@ -179,7 +203,6 @@ export const CreatePost = () => {
                       setCaption(e.target.value);
                     }}
                   />
-    
                 </div>
                 <Input
                   className="flex justify-center items-center"
@@ -191,13 +214,20 @@ export const CreatePost = () => {
                 />
                 <div>
                   {imgs.map((img, index) => (
-                    <img
-                      className="flex"
-                      key={index}
-                      src={URL.createObjectURL(img)}
-                      alt="#"
-                      style={{ maxWidth: "100%", height: "auto" }}
-                    />
+                    <div key={index} className="relative">
+                      <img
+                        className="flex"
+                        src={URL.createObjectURL(img)}
+                        alt="#"
+                        style={{ maxWidth: "100%", height: "auto" }}
+                      />
+                      <button
+                        className="absolute top-0 right-0 mt-1 mr-1 rounded-full bg-gray-200 text-gray-700 p-1"
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        <FaRegCircleXmark />
+                      </button>
+                    </div>
                   ))}
                 </div>
                 <div className="flex items-center border bg-white p-2 rounded-lg border-black">

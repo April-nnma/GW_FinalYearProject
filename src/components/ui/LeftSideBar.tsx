@@ -1,16 +1,22 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Image } from "@chakra-ui/react";
+import { PATH } from "constant";
 import { useAuth } from "hooks";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export const LeftSideBar = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   return (
     <div className="w-[22.5rem] h-auto py-4">
       <ul className="w-full text-gray-600 cursor-pointer ">
         <li className="h-12 mb-2 flex items-center justify-content space-x-2 p-2 rounded-md">
-          <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
-            <Avatar size="sm" />
+          <div
+            className="flex items-center mb-4 rounded-md p-2 cursor-pointer"
+            onClick={() => navigate(PATH.account)}
+          >
+            <Avatar size="sm" src="https://random.imagecdn.app/250/250" />
             <div className="whitespace-nowrap ml-2 font-medium">
               {user?.fullname}
             </div>
