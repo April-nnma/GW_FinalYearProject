@@ -10,16 +10,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostLike } from './post_like/post_like.entity';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/comment.entity';
+import { StoryModule } from './story/story.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    UserModule,
     AuthModule,
+    UserModule,
     PostModule,
     ReactModule,
     PostLikeModule,
     CommentModule,
+    StoryModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',

@@ -16,6 +16,7 @@ model user {
   comment       comment[]
   post          post[]
   react         react[]
+  story         story[]
 }
 
 model comment {
@@ -62,4 +63,15 @@ model post_like {
   user_id   Int
   post_id   Int
   like_date DateTime @default(now()) @db.DateTime(0)
+}
+
+model story {
+  story_id       Int      @id @default(autoincrement())
+  user_id_story  Int
+  fullname_story String?  @db.VarChar(255)
+  content_story  String   @db.LongText
+  created_story  DateTime @db.Date
+  user           user     @relation(fields: [user_id_story], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id_story")
+
+  @@index([user_id_story], map: "fk_user_id_story")
 }

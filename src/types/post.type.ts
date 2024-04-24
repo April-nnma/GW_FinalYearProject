@@ -4,5 +4,5 @@ export interface createPostDto {
   post_id: number;
   caption: string;
   content: string;
-  created_at: string;
+  created_at: Date;
 }
