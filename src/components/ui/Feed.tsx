@@ -3,6 +3,7 @@ import { RightSideBar } from "./RightSideBar";
 import { CreatePost } from "./Post/CreatePost";
 import { Story } from "./Story/Story";
 import { Post } from "./Post/Post";
+import { CreateStory } from "./Story/CreateStory";
 
 export const Feed = () => {
   return (
@@ -12,7 +13,10 @@ export const Feed = () => {
       </div>
       <div className="flex flex-grow justify-start items-start pl-[calc(50%-40rem)] ml-72">
         <div className="w-[42.5rem]">
-          <Story />
+          <div className="flex">
+            <CreateStory />
+            <Story />
+          </div>
           <CreatePost />
           <Post />
         </div>

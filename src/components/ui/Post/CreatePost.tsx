@@ -152,14 +152,11 @@ export const CreatePost = () => {
                 <div className="flex items-center ml-5">
                   <Avatar
                     size="sm"
-                    // src={user?.avatarUrl || "path/to/default/avatar.jpg"}
+                    src="https://random.imagecdn.app/250/250"
+                    className="mt-0"
                   />
                   <div className="ml-3">
                     <p className="font-semibold">{user?.fullname}</p>
-                    {/* <div className="flex">
-                      <p className="text-xs">3 hours ago</p>
-                      <BiWorld className="ml-1" />
-                    </div> */}
                     <Box
                       className="flex items-center justify-center"
                       as="button"

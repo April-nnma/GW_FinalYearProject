@@ -19,7 +19,7 @@ export const commentService = {
   createComment: async (
     postId: number,
     userId: number,
-    newComment: PostComment,
+    newComment: PostComment
   ): Promise<PostComment> => {
     try {
       const response = await api.post<PostComment>(
@@ -42,19 +42,19 @@ export const commentService = {
     }
   },
 
-  updateComment: async (
-    commentId: number,
-    updatedComment: PostComment
-  ): Promise<PostComment> => {
-    try {
-      const response = await api.patch<PostComment>(
-        `${Id}`,
-        updatedComment
-      );
-      return response.data;
-    } catch (error) {
-      console.error("Error updating comment:", error);
-      throw error;
-    }
-  },
+  // updateComment: async (
+  //   commentId: number,
+  //   updatedComment: PostComment
+  // ): Promise<PostComment> => {
+  //   try {
+  //     const response = await api.patch<PostComment>(
+  //       `${Id}`,
+  //       updatedComment
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error updating comment:", error);
+  //     throw error;
+  //   }
+  // },
 };
