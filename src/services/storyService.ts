@@ -2,7 +2,7 @@ import { apiInstance } from "constant/apiInstance";
 import { CreateStory } from "types/StoryService";
 
 const api = apiInstance({
-  baseURL: import.meta.env.VITE_POST_SERVICES_API,
+  baseURL: import.meta.env.VITE_STORY_SERVICES_API,
 });
 export const storyService = {
   getStory: (): Promise<ApiResponse<CreateStory[]>> =>

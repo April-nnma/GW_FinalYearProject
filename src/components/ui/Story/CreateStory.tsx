@@ -7,7 +7,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -68,10 +67,11 @@ export const CreateStory = () => {
         if (imgs.length > 0) {
           imgs.map((img) => formData.append("file", img));
         }
+        console.log("formData", formData);
         await sleep();
         const response = await storyService.createStory(formData);
         if (response) {
-          toast("Post created successfully");
+          toast("Story created successfully");
           setImgs([]);
           document.dispatchEvent(new Event("storyCreated"));
           onClose();
@@ -91,112 +91,106 @@ export const CreateStory = () => {
     setImgs(newImgs);
   };
   return (
-    <div className="w-full h-50 flex space-x-2 overflow-hidden cursor-pointer my-6 rounded-xl">
-      <div className="w-28 h-48 relative shadow ">
-        <Image
-          className="w-full h-full"
-          src="https://random.imagecdn.app/250/250"
-          alt="#"
-        />
-        <div
-          className="w-full absolute flex justify-center items-center"
-          style={{ bottom: "13%" }}
+    <div className="w-28 h-48 relative overflow-hidden cursor-pointer my-6 rounded-md ">
+      <Image
+        className="w-full h-full"
+        src="https://random.imagecdn.app/250/250"
+        alt="#"
+      />
+      <div
+        className="w-full absolute flex justify-center items-center"
+        style={{ bottom: "13%" }}
+      >
+        <Button
+          onClick={onOpen}
+          colorScheme="messenger"
+          size="md"
+          borderRadius="full"
+          className="z-50"
+          p={2}
+          border="4px solid white"
+          iconSpacing={3}
         >
-          <Button
-            onClick={onOpen}
-            colorScheme="messenger"
-            size="md"
-            borderRadius="full"
-            className="z-50"
-            p={2}
-            border="4px solid white"
-            iconSpacing={3}
-          >
-            <FaPlus className="text-white" />
-          </Button>
-          <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalCloseButton />
-              <ModalBody>
-                <form onSubmit={handlePost}>
-                  <div className="flex items-center justify-center ml-5">
-                    <Avatar
-                      size="sm"
-                      src="https://random.imagecdn.app/250/250"
+          <FaPlus className="text-white" />
+        </Button>
+        <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalCloseButton />
+            <ModalBody>
+              <form onSubmit={handlePost}>
+                <div className="flex items-center justify-center ml-5">
+                  <Avatar size="sm" src="https://random.imagecdn.app/250/250" />
+                  <div className="ml-3">
+                    <p className="font-semibold">{user?.fullname}</p>
+                  </div>
+                </div>
+                <Input
+                  className="flex justify-center items-center"
+                  type="file"
+                  name="content"
+                  id="file-input"
+                  onChange={handlePreviewImg}
+                  hidden
+                />
+                <div className="flex items-center justify-center relative">
+                  <div className="w-7 h-7">
+                    <Input type="file" className="hidden absolute" />
+                    <Image
+                      className=""
+                      src="../../../../public/images/picture.png"
+                      alt="#"
+                      onClick={() =>
+                        document.getElementById("file-input").click()
+                      }
                     />
-                    <div className="ml-3">
-                      <p className="font-semibold">{user?.fullname}</p>
-                    </div>
                   </div>
-                  <Input
-                    className="flex justify-center items-center"
-                    type="file"
-                    name="content"
-                    id="file-input"
-                    onChange={handlePreviewImg}
-                    hidden
-                  />
-                  <div className="flex items-center justify-center relative">
-                    <div className="w-7 h-7">
-                      <Image
-                        className=""
-                        src="../../../../public/images/picture.png"
+                </div>
+                <div>
+                  {imgs.map((img, index) => (
+                    <div key={index} className="relative">
+                      <img
+                        className="flex"
+                        src={URL.createObjectURL(img)}
                         alt="#"
-                        onClick={() =>
-                          document.getElementById("file-input").click()
-                        }
+                        style={{ maxWidth: "100%", height: "auto" }}
                       />
-                      <input type="file" className="hidden absolute" />
+                      <button
+                        className="absolute top-0 right-0 mt-1 mr-1 rounded-full bg-gray-200 text-gray-700 p-1"
+                        onClick={() => handleRemoveImage(index)}
+                      >
+                        <FaRegCircleXmark />
+                      </button>
                     </div>
-                  </div>
-                  <div>
-                    {imgs.map((img, index) => (
-                      <div key={index} className="relative">
-                        <img
-                          className="flex"
-                          src={URL.createObjectURL(img)}
-                          alt="#"
-                          style={{ maxWidth: "100%", height: "auto" }}
-                        />
-                        <button
-                          className="absolute top-0 right-0 mt-1 mr-1 rounded-full bg-gray-200 text-gray-700 p-1"
-                          onClick={() => handleRemoveImage(index)}
-                        >
-                          <FaRegCircleXmark />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                  ))}
+                </div>
 
-                  <Button
-                    type="submit"
-                    colorScheme="messenger"
-                    width="100%"
-                    className="mt-4"
-                    isLoading={isLoading}
-                  >
-                    {isLoading ? (
-                      <>
-                        <AiOutlineLoading className="text-white animate-spin" />
-                        {" Posting"}
-                      </>
-                    ) : (
-                      <>
-                        <AiOutlinePlus className="text-white" />
-                        {" Post"}
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </ModalBody>
-              <ModalFooter></ModalFooter>
-            </ModalContent>
-          </Modal>
-        </div>
-        <div className="bg-white z-30 absolute text-center bottom-0 p-2 pt-4 w-full h-auto ">
-          <p className="text-gray-500 text-sm font-semibold">Create Story</p>
-        </div>
+                <Button
+                  type="submit"
+                  colorScheme="messenger"
+                  width="100%"
+                  className="mt-4"
+                  isLoading={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <AiOutlineLoading className="text-white animate-spin" />
+                      {" Posting"}
+                    </>
+                  ) : (
+                    <>
+                      <AiOutlinePlus className="text-white" />
+                      {" Post"}
+                    </>
+                  )}
+                </Button>
+              </form>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </div>
+      <div className="bg-white z-30 absolute text-center bottom-0 p-2 pt-4 w-full h-auto ">
+        <p className="text-gray-500 text-sm font-semibold">Create Story</p>
       </div>
     </div>
   );

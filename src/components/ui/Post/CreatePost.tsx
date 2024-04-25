@@ -67,7 +67,6 @@ export const CreatePost = () => {
       setIsLoading(true);
       event.preventDefault();
       if (user) {
-        // Nếu có hình ảnh được chọn
         if (imgs.length > 0) {
           const isSizeValid = imgs.every(isImageSizeValid);
           if (!isSizeValid) {

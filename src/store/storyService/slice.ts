@@ -7,8 +7,7 @@ type StoryServiceInitialState = {
   isFetchingStories?: boolean;
 };
 
-const initialState: StoryServiceInitialState = {
-};
+const initialState: StoryServiceInitialState = {};
 
 const storyServiceSlice = createSlice({
   name: "storyService",
@@ -21,6 +20,7 @@ const storyServiceSlice = createSlice({
       state.storiesList = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getStoriesThunk.pending, (state) => {
