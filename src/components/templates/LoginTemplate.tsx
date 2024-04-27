@@ -17,7 +17,7 @@ export const LoginTemplate = () => {
         <div
           className="hidden bg-cover lg:block lg:w-4/6"
           style={{
-            backgroundImage: "url(../../../public/images/image1.jpg)",
+            backgroundImage: "url(/images/image1.jpg)",
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
@@ -39,7 +39,7 @@ export const LoginTemplate = () => {
               <div className="flex justify-center mx-auto">
                 <img
                   className="w-12 h-12 sm:h-12 sm:w-12"
-                  src="../../../public/images/logo.png"
+                  src="/images/logo.png"
                   alt="#"
                 />
               </div>
@@ -49,7 +49,7 @@ export const LoginTemplate = () => {
               <div className="flex justify-center mx-auto mt-10">
                 <img
                   className="w-30 h-30 sm:w-30 md:w-20 lg:h-10 min-sm:w-10"
-                  src="../../../public/images/meta.png"
+                  src="/images/meta.png"
                   alt="#"
                 />
               </div>
