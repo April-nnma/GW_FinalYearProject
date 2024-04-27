@@ -20,6 +20,16 @@ export class PostLikeService {
       throw new NotFoundException('Failed to retrieve post likes');
     }
   }
+  async get(postId: number): Promise<PostLike[]> {
+    try {
+      const postLikes = await this.postLikeRepository.find({
+        where: { post_id: postId },
+      });
+      return postLikes;
+    } catch (error) {
+      throw new NotFoundException('Failed to retrieve post likes');
+    }
+  }
 
   async createPostLike(userId: number, postId: number): Promise<PostLike> {
     try {

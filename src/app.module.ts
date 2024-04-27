@@ -4,7 +4,6 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './config/prisma/prisma.service';
 import { PostModule } from './post/post.module';
-import { ReactModule } from './react/react.module';
 import { PostLikeModule } from './post_like/post_like.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostLike } from './post_like/post_like.entity';
@@ -18,7 +17,6 @@ import { StoryModule } from './story/story.module';
     AuthModule,
     UserModule,
     PostModule,
-    ReactModule,
     PostLikeModule,
     CommentModule,
     StoryModule,
