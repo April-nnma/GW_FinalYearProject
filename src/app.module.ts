@@ -13,6 +13,7 @@ import { StoryModule } from './story/story.module';
 
 @Module({
   imports: [
+    
     ConfigModule.forRoot(),
     AuthModule,
     UserModule,
@@ -22,11 +23,11 @@ import { StoryModule } from './story/story.module';
     StoryModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: '127.0.0.1',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'gwfinal',
+      host: 'mysql-1d631f1c-gokuhieu-72d6.d.aivencloud.com',
+      port: 19401,
+      username: 'avnadmin',
+      password: 'AVNS_BCWGX9GoMZoZvLM2K1Y',
+      database: 'defaultdb',
       entities: [PostLike, Comment],
       synchronize: true,
     }),
