@@ -63,9 +63,10 @@ export const Comment = ({
       setIsLoading(true);
       try {
         await commentService.deleteComment(commentId);
+   
         toast.success("Comment deleted successfully!");
-        // Lọc ra comment vừa xóa và cập nhật state
-        setComment(comment.filter((c) => c.commentId !== commentId));
+        const filterComment = comment.filter((c) => c.comment_id !== commentId)
+        setComment(filterComment);
         setNumberOfComments((prev) => prev - 1);
       } catch (error) {
         console.error("Error deleting comment:", error);
@@ -88,7 +89,7 @@ export const Comment = ({
         console.error("Error getting comments:", error);
       });
   }, []);
-
+ 
   return (
     <div className="max-h-60 overflow-y-auto">
       <form action="" onSubmit={handleCommentPost}>
@@ -145,12 +146,12 @@ export const Comment = ({
                       <p className="font-normal">{comments.message}</p>
                     </div>
                   </Button>
-                  <TiDeleteOutline
+                  {comments.user_id==userId&&<TiDeleteOutline
                     className="mt-3 ml-4"
                     onClick={() =>
-                      handleDeleteComment(comments.commentId, comments.userId)
+                      handleDeleteComment(comments.comment_id,comments.user_id)
                     }
-                  />
+                  />}
                 </div>
               );
             })}
