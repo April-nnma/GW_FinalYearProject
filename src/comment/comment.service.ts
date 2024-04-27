@@ -20,7 +20,7 @@ export class CommentService {
       if (!user) {
         throw new NotFoundException('User not found');
       }
-      const fullname_comment = user.fullname; 
+      const fullname_comment = user.fullname;
       return this.prisma.comment.create({
         data: {
           user_id: userId,
@@ -38,19 +38,6 @@ export class CommentService {
         message,
         fullname_comment: fullnameComment,
       },
-    });
-  }
-
-  async updateComment(commentId: number, updateCommentDto: UpdateCommentDto) {
-    const comment = await this.prisma.comment.findUnique({
-      where: { comment_id: commentId },
-    });
-    if (!comment) {
-      throw new NotFoundException('Comment not found');
-    }
-    return this.prisma.comment.update({
-      where: { comment_id: commentId },
-      data: updateCommentDto,
     });
   }
 
@@ -74,5 +61,20 @@ export class CommentService {
     }
 
     return comments;
+  }
+
+  async updateComment(commentId: number, updateCommentDto: UpdateCommentDto) {
+    const comment = await this.prisma.comment.findUnique({
+      where: { comment_id: commentId },
+    });
+
+    if (!comment) {
+      throw new NotFoundException('Comment not found');
+    }
+
+    return this.prisma.comment.update({
+      where: { comment_id: commentId },
+      data: updateCommentDto,
+    });
   }
 }

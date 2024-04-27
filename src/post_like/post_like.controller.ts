@@ -1,12 +1,14 @@
 import { Controller, Post, Delete, Param, HttpCode, Get } from '@nestjs/common';
 import { PostLikeService } from './post_like.service';
 import { PostLike } from './post_like.entity';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiBearerAuth()
+@ApiTags('Like')
 @Controller('post-like')
 export class PostLikeController {
   constructor(private postLikeService: PostLikeService) {}
 
-  @Get(':userId/:postId') 
+  @Get(':userId/:postId')
   async getLikesByUserAndPost(
     @Param('userId') userId: number,
     @Param('postId') postId: number,

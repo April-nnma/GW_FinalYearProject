@@ -77,4 +77,29 @@ export class StoryService {
       return ResponseCode.failed('Failed to create story');
     }
   }
+  async deleteStory(storyId: number) {
+    try {
+      const story = await this.prisma.story.findUnique({
+        where: { story_id: storyId },
+      });
+
+      if (!story) {
+        throw new NotFoundException(`Story with ID ${storyId} not found`);
+      }
+
+      await this.prisma.story.delete({
+        where: { story_id: storyId },
+      });
+
+      this.logger.log(`Story with ID ${storyId} deleted successfully`);
+      return ResponseCode.success(
+        null,
+        'Story deleted successfully',
+        HttpStatus.OK,
+      );
+    } catch (error) {
+      this.logger.error(`Failed to delete story: ${error.message}`);
+      return ResponseCode.failed('Failed to delete story');
+    }
+  }
 }

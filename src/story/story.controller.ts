@@ -5,6 +5,8 @@ import {
   Body,
   Get,
   UploadedFiles,
+  Delete,
+  Param,
 } from '@nestjs/common';
 import { StoryService } from './story.service';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,5 +39,11 @@ export class StoryController {
     @Body() createStoryDto: createStoryDto,
   ) {
     return this.storyService.createStory(createStoryDto, files);
+  }
+
+  @Delete('deleteStory/:storyId')
+  deleteStory(@Param('storyId') storyId: string): void {
+    const storyIdNumber = parseInt(storyId, 10);
+    this.storyService.deleteStory(storyIdNumber);
   }
 }

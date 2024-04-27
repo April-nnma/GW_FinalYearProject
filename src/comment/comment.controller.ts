@@ -9,15 +9,15 @@ import {
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto, UpdateCommentDto } from './dto/comment.dto';
-
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiBearerAuth()
+@ApiTags('Comment')
 @Controller('comments')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Get('getuserbypostid/:postId')
-  async getCommentByPostId(
-    @Param('postId') postId: string
-  ) {
+  async getCommentByPostId(@Param('postId') postId: string) {
     return this.commentService.getCommentsByPostId(postId);
   }
 
@@ -27,24 +27,24 @@ export class CommentController {
     @Param('postId') postId: number,
     @Body() createCommentDto: CreateCommentDto,
   ) {
-    console.log(createCommentDto)
+    console.log(createCommentDto);
     return this.commentService.createComment(
       +userId,
       +postId,
       createCommentDto,
     );
   }
-  
+
+  @Delete(':id')
+  async deleteComment(@Param('id') id: number) {
+    return this.commentService.deleteComment(+id);
+  }
+
   @Patch(':id')
   async updateComment(
     @Param('id') id: number,
     @Body() updateCommentDto: UpdateCommentDto,
   ) {
     return this.commentService.updateComment(+id, updateCommentDto);
-  }
-
-  @Delete(':id')
-  async deleteComment(@Param('id') id: number) {
-    return this.commentService.deleteComment(+id);
   }
 }
