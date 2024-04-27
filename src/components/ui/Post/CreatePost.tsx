@@ -80,12 +80,10 @@ export const CreatePost = () => {
         const formData = new FormData();
         formData.append("user_id_create", user.user_id.toString());
 
-        // Nếu có hình ảnh được chọn thì thêm vào formData
         if (imgs.length > 0) {
           imgs.map((img) => formData.append("file", img));
         }
 
-        // Thêm caption vào formData
         formData.append("caption", caption);
 
         await sleep();

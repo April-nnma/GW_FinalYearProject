@@ -14,17 +14,4 @@ export const getPostsThunk = createAsyncThunk(
   }
 );
 
-export const getPostsLikeThunk = createAsyncThunk(
-  "likeService/getLikesByUserAndPost",
-  async (
-    { userId, postId }: { userId: number; postId: number },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await likeService.getLikesByUserAndPost(userId, postId);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+

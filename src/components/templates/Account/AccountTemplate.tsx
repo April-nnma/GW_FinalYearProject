@@ -4,11 +4,11 @@ import { InfoProfile } from "./InfoProfile";
 import { IntroProfile } from "./IntroProfile";
 import { useState } from "react";
 import { PostView } from "types";
-import { PostsView } from "../../containers/PostsView";
 import { IoGrid } from "react-icons/io5";
 import { HiBars3 } from "react-icons/hi2";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { IoSettingsSharp } from "react-icons/io5";
+import { PostsView } from "../../containers";
 
 export const AccountTemplate = () => {
   const [postView, setPostView] = useState<PostView>("listView");

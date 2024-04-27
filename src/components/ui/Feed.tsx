@@ -1,9 +1,6 @@
-import { LeftSideBar } from "./LeftSideBar";
-import { RightSideBar } from "./RightSideBar";
-import { CreatePost } from "./Post/CreatePost";
-import { Story } from "./Story/Story";
-import { Post } from "./Post/Post";
-import { CreateStory } from "./Story/CreateStory";
+import { CreatePost, Post } from "./Post";
+import { LeftSideBar, RightSideBar } from "./SideBar";
+import { CreateStory, Story } from "./Story";
 
 export const Feed = () => {
   return (

@@ -1,16 +1,17 @@
 import { useAuth } from "hooks";
 import { useSelector } from "react-redux";
-import { BiLike, BiWorld } from "react-icons/bi";
+import { BiWorld } from "react-icons/bi";
 import { Avatar } from "@chakra-ui/avatar";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Divider, Image, Card } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { likeService, postService } from "services";
-import { toast } from "react-toastify";
+import { postService } from "services";
 import { CreatePost } from "types";
 import { getPostsThunk, postServiceActions } from "store/postService";
 import { RootState, useAppDispatch } from "store";
 import { HiXMark } from "react-icons/hi2";
+import { Like } from "../ui/Like";
+import { Comment } from "../ui/Comment/Comment";
 
 interface PostsViewProps {
   postsView?: CreatePost;
@@ -20,6 +21,8 @@ export const PostsView: React.FC<PostsViewProps> = () => {
   const [comments, setComments] = useState([]);
   const [postLikes, setPostLikes] = useState<{ [postId: number]: boolean }>({});
   const [posts, setPosts] = useState<CreatePost[]>([]);
+  const [numberOfComments, setNumberOfComments] = useState(0);
+
   const dispatch = useAppDispatch();
 
   const { postsList, isFetchingPosts } = useSelector(
@@ -43,67 +46,7 @@ export const PostsView: React.FC<PostsViewProps> = () => {
   if (!filteredPosts || filteredPosts.length === 0) {
     return <div className="text-center">No posts to display</div>;
   }
-  const handleLikePost = async (postId: number, userId: number) => {
-    try {
-      const response = await likeService.getLikesByUserAndPost(userId, postId);
 
-      if (response.data && response.data.length > 0) {
-        const likedPost = response.data;
-
-        const userLikedPost = likedPost.some((like) => like.user_id === userId);
-
-        if (userLikedPost) {
-          await likeService.deletePostLike(likedPost[0].like_id);
-          toast.success("Post unliked successfully");
-
-          setPostLikes((prevPostLikes) => {
-            const newPostLikes = { ...prevPostLikes };
-            delete newPostLikes[postId];
-            return newPostLikes;
-          });
-          setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-              post.post_id === postId
-                ? { ...post, likes: post.like.like_id - 1 }
-                : post
-            )
-          );
-        } else {
-          await likeService.createPostLike(userId, postId);
-          toast.success("Post liked successfully");
-
-          setPostLikes((prevPostLikes) => ({
-            ...prevPostLikes,
-            [postId]: true,
-          }));
-          setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-              post.post_id === postId
-                ? { ...post, likes: post.like.like_id + 1 }
-                : post
-            )
-          );
-        }
-      } else {
-        await likeService.createPostLike(userId, postId);
-        toast.success("Post liked successfully");
-
-        setPostLikes((prevPostLikes) => ({
-          ...prevPostLikes,
-          [postId]: true,
-        }));
-        setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-            post.post_id === postId
-              ? { ...post, likes: post.like.like_id + 1 }
-              : post
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
   const handleDeletePost = async (postId: number) => {
     try {
       await postService.deletePost(postId);
@@ -113,6 +56,7 @@ export const PostsView: React.FC<PostsViewProps> = () => {
       console.error("Error deleting post:", error);
     }
   };
+
   return (
     <>
       {filteredPosts
@@ -183,25 +127,7 @@ export const PostsView: React.FC<PostsViewProps> = () => {
             </div>
             <Divider orientation="horizontal" mt={3} borderColor="gray.300" />
             <div className="flex justify-between mx-6 mt-1 font-medium cursor-pointer">
-              <div
-                className="flex items-center"
-                onClick={() => handleLikePost(post.post_id, user.user_id)}
-              >
-                <BiLike
-                  className={`w-5 h-5 ${
-                    postLikes[post.post_id] ? "text-blue-700" : "text-black"
-                  }`}
-                />
-                <p
-                  className={`pl-2 text-[18px] ${
-                    postLikes[post.post_id]
-                      ? "text-blue-700 font-bold"
-                      : "text-black"
-                  }`}
-                >
-                  {postLikes[post.post_id] ? "Like" : "Like"}
-                </p>
-              </div>
+              <Like userId={user.user_id} postId={post.post_id} />
               <div className="flex items-center">
                 <FaRegCommentAlt className="w-5 h-5" />
                 <p className="pl-2">Comment</p>
@@ -212,10 +138,16 @@ export const PostsView: React.FC<PostsViewProps> = () => {
                   alt="Share"
                   className="w-6 h-6"
                 />
-
                 <p className="pl-2">Share</p>
               </div>
             </div>
+            <Divider orientation="horizontal" mt={3} borderColor="gray.300" />
+            <Comment
+              fullname={user.fullname}
+              postId={post.post_id}
+              userId={user.user_id}
+              setNumberOfComments={setNumberOfComments}
+            />
           </Card>
         ))}
     </>

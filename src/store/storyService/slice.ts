@@ -19,6 +19,11 @@ const storyServiceSlice = createSlice({
     setStory(state, action: PayloadAction<CreateStory[]>) {
       state.storiesList = action.payload;
     },
+    deleteStory(state, action: PayloadAction<number>) {
+      state.storiesList = state.storiesList?.filter(
+        (story) => story.story_id !== action.payload
+      );
+    },
   },
 
   extraReducers: (builder) => {

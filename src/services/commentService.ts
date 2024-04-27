@@ -2,13 +2,13 @@ import { apiInstance } from "constant/apiInstance";
 import { PostComment } from "types";
 
 const api = apiInstance({
-  baseURL: import.meta.env.VITE_LIKE_SERVICES_API,
+  baseURL: import.meta.env.VITE_COMMENT_SERVICES_API,
 });
 
 export const commentService = {
   getCommentsByPostId: async (postId: number): Promise<PostComment[]> => {
     try {
-      const response = await api.get<PostComment[]>(`/${postId}/comments`);
+      const response = await api.get(`/getuserbypostid/${postId}`);
       return response.data;
     } catch (error) {
       console.error("Error getting comments:", error);
@@ -19,12 +19,12 @@ export const commentService = {
   createComment: async (
     postId: number,
     userId: number,
-    newComment: PostComment
+    PostComment: PostComment
   ): Promise<PostComment> => {
     try {
       const response = await api.post<PostComment>(
         `${userId}/${postId}`,
-        newComment
+        PostComment
       );
       return response.data;
     } catch (error) {
@@ -35,7 +35,7 @@ export const commentService = {
 
   deleteComment: async (commentId: number): Promise<void> => {
     try {
-      await api.delete(`/comments/${commentId}`);
+      await api.delete(`/${commentId}`);
     } catch (error) {
       console.error("Error deleting comment:", error);
       throw error;
