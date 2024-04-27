@@ -17,4 +17,10 @@ export const storyService = {
     );
     return response.data;
   },
+  deleteStory: async (storyId: number): Promise<ApiResponse<void>> => {
+    const response = await api.delete<ApiResponse<void>>(
+      `/deleteStory/${storyId}`
+    );
+    return response.data;
+  },
 };

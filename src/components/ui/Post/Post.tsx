@@ -1,11 +1,10 @@
-import { BiLike, BiSmile, BiWorld } from "react-icons/bi";
-import { AiOutlineCamera, AiOutlineGif } from "react-icons/ai";
+import { BiWorld } from "react-icons/bi";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Button, Divider, Image, Card } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
-import { likeService, postService } from "services";
+import { Divider, Image, Card } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { postService } from "services";
 import { CreatePost } from "types";
 import { getPostsThunk, postServiceActions } from "store/postService";
 import { RootState, useAppDispatch } from "store";
@@ -19,7 +18,6 @@ export const Post = () => {
   const { user } = useAuth();
   const [postLikes, setPostLikes] = useState<{ [postId: number]: boolean }>({});
   const [posts, setPosts] = useState<CreatePost[]>([]);
-  const [comments, setComments] = useState([]);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const dispatch = useAppDispatch();
 

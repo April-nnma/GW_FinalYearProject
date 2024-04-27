@@ -25,7 +25,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/friend.png"
+              src="/images/friend.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -35,7 +35,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/group.png"
+              src="/images/group.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -45,7 +45,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/save.jpg"
+              src="/images/save.jpg"
               alt="#"
               className="w-8 h-7 rounded-full mr-2"
             />
@@ -55,7 +55,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/memorie.jpg"
+              src="/images/memorie.jpg"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -65,7 +65,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/video.png"
+              src="/images/video.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -75,7 +75,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/marketplace.png"
+              src="/images/marketplace.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -85,7 +85,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/event.png"
+              src="/images/event.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -95,7 +95,7 @@ export const LeftSideBar = () => {
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">
           <div className="flex items-center mb-4 rounded-md p-2 cursor-pointer">
             <Image
-              src="../../../public/images/frundaiser.png"
+              src="/images/frundaiser.png"
               alt="#"
               className="w-8 h-8 rounded-full mr-2"
             />

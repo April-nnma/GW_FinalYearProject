@@ -3,14 +3,22 @@ import { Box, Spinner, Image } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 import { RootState, useAppDispatch } from "store";
-import { useEffect } from "react";
-import { getStoriesThunk } from "store/storyService";
+import { useEffect, useState } from "react";
+import { getStoriesThunk, storyServiceActions } from "store/storyService";
 import { useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
+import { FaXmark } from "react-icons/fa6";
+import { useAuth } from "hooks";
+import { toast } from "react-toastify";
+import { storyService } from "services";
+import { CreateStory } from "types";
 export const Story = () => {
+  const { user } = useAuth();
   const dispatch = useAppDispatch();
+  const [stories, setStories] = useState<CreateStory[]>([]);
+
   const { storiesList, isFetchingStories } = useSelector(
     (state: RootState) => state.storyService
   );
@@ -34,7 +42,23 @@ export const Story = () => {
       <div className="text-center justify-center ml-80 mt-10">Loading...</div>
     );
   }
-
+  const handleDeleteStory = async (storyId: number) => {
+    try {
+      const story = storiesList.find((story) => story.story_id === storyId);
+      if (story && story.user_id_story === user.user_id) {
+        await storyService.deleteStory(storyId);
+        dispatch(storyServiceActions.deleteStory(storyId));
+        toast.success("Story deleted successfully!");
+        setStories(storiesList.filter((s) => s.story_id !== storyId));
+        console.log("Story deleted successfully!");
+      } else {
+        toast.error("Don't delete this story");
+        console.log("You are not authorized to delete this story.");
+      }
+    } catch (error) {
+      console.error("Error deleting story:", error);
+    }
+  };
   return (
     <Swiper
       breakpoints={{
@@ -86,9 +110,16 @@ export const Story = () => {
                       position="absolute"
                       transform="translate(-50%, -50%)"
                     />
-                    <p className="text-white ml-[50px] mt-[5px]">
+                    <p className="text-white text-sm ml-[54px] mt-[8px] justify-center">
                       {story.fullname_story}
                     </p>
+                    <div className="absolute top-0 right-0 p-1 rounded-full cursor-pointer">
+                      <FaXmark
+                        onClick={() => {
+                          handleDeleteStory(story.story_id);
+                        }}
+                      />
+                    </div>
                   </Box>
                 </Box>
               </div>

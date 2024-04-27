@@ -36,7 +36,7 @@ export const RegisterTemplate = () => {
               <div className="flex justify-center mx-auto">
                 <img
                   className="w-12 h-12 sm:h-12 sm:w-12"
-                  src="../../../public/images/logo.png"
+                  src="/images/logo.png"
                   alt="#"
                 />
               </div>
@@ -46,7 +46,7 @@ export const RegisterTemplate = () => {
               <div className="flex justify-center mx-auto mt-10">
                 <img
                   className="w-30 h-30 sm:h-10  "
-                  src="../../../public/images/meta.png"
+                  src="/images/meta.png"
                   alt="#"
                 />
               </div>
