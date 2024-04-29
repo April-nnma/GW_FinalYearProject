@@ -12,6 +12,7 @@ import { RootState, useAppDispatch } from "store";
 import { HiXMark } from "react-icons/hi2";
 import { Like } from "../ui/Like";
 import { Comment } from "../ui/Comment/Comment";
+import { formatDate } from "utils";
 
 interface PostsViewProps {
   postsView?: CreatePost;
@@ -73,17 +74,13 @@ export const PostsView: React.FC<PostsViewProps> = () => {
                 <div className="ml-3">
                   <p className="font-bold">{post?.fullname_create}</p>
                   <div className="flex">
-                    <p className="text-xs">{post?.created_at}</p>
+                    <p className="text-xs">{formatDate(post?.created_at)}</p>
                     <BiWorld className="ml-1" />
                   </div>
                 </div>
               </div>
               <div className="flex">
-                <Image
-                  src="../../../../public/images/dots.png"
-                  alt="#"
-                  className="w-9 h-10"
-                />
+                <Image src="/images/dots.png" alt="#" className="w-9 h-10" />
                 <HiXMark
                   className="mt-3 w-full h-full"
                   onClick={() => {
@@ -103,10 +100,10 @@ export const PostsView: React.FC<PostsViewProps> = () => {
             <div className="flex justify-between text-[#8e8d8d] mt-3 ml-4">
               <div className="flex items-center ">
                 <div className=" w-[1.1rem] h-[1.1rem]">
-                  <Image src="../../../../public/images/like.png" />
+                  <Image src="/images/like.png" />
                 </div>
                 <div className="ml-[2px] w-5 h-5">
-                  <Image src="../../../../public/images/heart.png" />
+                  <Image src="/images/heart.png" />
                 </div>
                 <p className="pl-2 whitespace-nowrap text-[15px] sm:text-[16px]">
                   {postLikes[post.post_id] ? (
@@ -134,7 +131,7 @@ export const PostsView: React.FC<PostsViewProps> = () => {
               </div>
               <div className="flex items-center">
                 <Image
-                  src="../../../../public/images/share.png"
+                  src="/images/share.png"
                   alt="Share"
                   className="w-6 h-6"
                 />
