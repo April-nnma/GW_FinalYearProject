@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { HiXMark } from "react-icons/hi2";
 import { Like } from "../Like/Like";
 import { Comment } from "../Comment/Comment";
+import { formatDate } from "utils";
 
 export const Post = () => {
   const { user } = useAuth();
@@ -24,10 +25,6 @@ export const Post = () => {
   const { postsList, isFetchingPosts } = useSelector(
     (state: RootState) => state.postService
   );
-
-  const formatDate = (dateString: string) => {
-    return dateString.split("T")[0];
-  };
 
   useEffect(() => {
     dispatch(getPostsThunk());
@@ -90,11 +87,7 @@ export const Post = () => {
                 </div>
               </div>
               <div className="flex">
-                <Image
-                  src="/images/dots.png"
-                  alt="#"
-                  className="w-9 h-10"
-                />
+                <Image src="/images/dots.png" alt="#" className="w-9 h-10" />
                 <HiXMark
                   className="mt-3 w-full h-full"
                   onClick={() => {

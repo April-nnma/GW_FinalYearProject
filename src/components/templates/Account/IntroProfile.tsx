@@ -10,9 +10,12 @@ import { IoIosSchool, IoLogoRss } from "react-icons/io";
 import { IoHome } from "react-icons/io5";
 import { LuInstagram } from "react-icons/lu";
 import { useAuth } from "hooks";
+import { FaBirthdayCake } from "react-icons/fa";
+import { formatDate } from "utils";
 
 export const IntroProfile = () => {
   const { user } = useAuth();
+
   return (
     <div className="col-span-2">
       <div className="bg-white rounded-lg p-3 text-sm text-gray-600 shadow">
@@ -60,14 +63,13 @@ export const IntroProfile = () => {
             <p className="text-blue-700 font-semibold">{user.fullname}</p>
           </div>
           <div className="flex items-center space-x-2">
-            <FaGithub />
+            <FaBirthdayCake />
             <a
-              href="https://github.com/April-nnma"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-700 font-semibold"
             >
-              April-nnma
+              {formatDate(user?.date_of_birth)}
             </a>
           </div>
           <div className="flex items-center space-x-2">
@@ -81,6 +83,18 @@ export const IntroProfile = () => {
               {user?.fullname}
             </a>
           </div>
+          <div className="flex items-center space-x-2">
+            <FaGithub />
+            <a
+              href="https://github.com/April-nnma"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-700 font-semibold"
+            >
+              April-nnma
+            </a>
+          </div>
+
           <div className="flex items-center space-x-2">
             <FaHeart />
             <p>Single</p>

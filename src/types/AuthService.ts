@@ -4,4 +4,5 @@ export type UserLogin = {
   email: string;
   password: string;
   token: string;
+  date_of_birth: string;
 };

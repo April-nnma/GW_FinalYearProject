@@ -27,6 +27,7 @@ export const Header = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const pathName = location?.pathname.split("/")[1];
+  const isActive = pathName === "" || pathName === undefined;
 
   return (
     <form>
@@ -59,20 +60,25 @@ export const Header = () => {
           </div>
         </div>
         <div className="col-span-3 flex items-center justify-center space-x-2">
-          <Link to="/">
-            <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
-              <div className="w-14 h-auto relative flex items-center justify-center">
-                <div
-                  className={`${
-                    pathName === "" || undefined
-                      ? "text-blue-600"
-                      : "text-gray-400"
-                  }`}
-                >
-                  <MdHome className="w-9 h-9" />{" "}
-                </div>
-              </div>
+          <Link
+            to="/"
+            className="relative group w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100"
+          >
+            <div className="w-14 h-auto flex items-center justify-center">
+              <MdHome
+                className={`w-9 h-9 ${
+                  isActive ? "text-blue-600" : "text-gray-400"
+                } group`}
+              />
             </div>
+            <span className=" absolute inset-0 flex items-center justify-center bg-black text-white text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
+              Home
+            </span>
+            <div
+              className={`absolute bottom-0 left-0 w-full border-b-4 ${
+                isActive ? "border-blue-600" : "border-transparent"
+              } group-hover:border-blue-600`}
+            ></div>
           </Link>
           <Link to="/watch">
             <div className="w-24 h-12 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-100">
