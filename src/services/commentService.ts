@@ -1,5 +1,6 @@
 import { apiInstance } from "constant/apiInstance";
 import { PostComment } from "types";
+import { UpdateComment } from "types";
 
 const api = apiInstance({
   baseURL: import.meta.env.VITE_COMMENT_SERVICES_API,
@@ -44,7 +45,7 @@ export const commentService = {
 
   updateComment: async (
     commentId: number,
-    updatedComment: PostComment
+    updatedComment: UpdateComment
   ): Promise<PostComment> => {
     try {
       const response = await api.patch<PostComment>(

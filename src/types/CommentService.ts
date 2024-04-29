@@ -5,3 +5,9 @@ export type PostComment = {
   message: string;
   fullname_comment: string;
 };
+export type UpdateComment = {
+
+  message: string;
+
+};
+
