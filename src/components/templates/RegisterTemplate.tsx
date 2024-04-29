@@ -15,7 +15,7 @@ export const RegisterTemplate = () => {
         <div
           className="hidden bg-cover lg:block lg:w-4/6"
           style={{
-            backgroundImage: "url(../../../public/images/image1.jpg)",
+            backgroundImage: "url(/images/image1.jpg)",
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
