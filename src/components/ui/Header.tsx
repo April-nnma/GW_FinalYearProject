@@ -34,7 +34,7 @@ export const Header = () => {
         {/* Left */}
         <div className="flex items-center mr-4">
           <div className="w-10 h-10 sm:h-10 sm:w-10">
-            <Image src="../../../public/images/logo.png" alt="#" />
+            <Image src="/images/logo.png" alt="#" />
           </div>
           <div className="flex items-center bg-gray-200 rounded-full p-3 pl-5 ml-3 ">
             <input

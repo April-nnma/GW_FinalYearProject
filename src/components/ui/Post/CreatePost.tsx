@@ -237,7 +237,7 @@ export const CreatePost = () => {
                     <div className="flex items-center mr-3">
                       <div className="w-7 h-7">
                         <Image
-                          src="../../../../public/images/camera.png"
+                          src="/images/camera.png"
                           alt="#"
                         />
                       </div>
@@ -245,7 +245,7 @@ export const CreatePost = () => {
                     <div className="flex items-center mr-3">
                       <div className="w-7 h-7">
                         <Image
-                          src="../../../../public/images/picture.png"
+                          src="/images/picture.png"
                           alt="#"
                           onClick={() =>
                             document.getElementById("file-input").click()
@@ -258,7 +258,7 @@ export const CreatePost = () => {
                     <div className="flex items-center mr-2">
                       <div className="w-7 h-7">
                         <Image
-                          src="../../../../public/images/smile.png"
+                          src="/images/smile.png"
                           alt="#"
                         />
                       </div>
@@ -270,7 +270,6 @@ export const CreatePost = () => {
                   colorScheme="messenger"
                   width="100%"
                   className="mt-4"
-                  //isLoading={isLoading}
                 >
                   {isLoading ? (
                     <>
@@ -290,17 +289,16 @@ export const CreatePost = () => {
           </ModalContent>
         </Modal>
       </div>
-      {/* {showPost && <PostForm closeForm={() => setShowPost(false)} />} */}
       <div className="flex justify-between px-3 sm:mx-9 pb-3 space-x-3 ml-96">
         <div className="flex items-center">
           <div className="w-7 h-7">
-            <Image src="../../../../public/images/camera.png" alt="#" />
+            <Image src="/images/camera.png" alt="#" />
           </div>
           <p className="pl-2 whitespace-nowrap text-[14px]">Live Video</p>
         </div>
         <div className="flex items-center">
           <div className="w-7 h-7">
-            <Image src="../../../../public/images/picture.png" alt="#" />
+            <Image src="/images/picture.png" alt="#" />
             <input type="file" className="hidden" />
           </div>
           <p className="pl-2 text-[14px]">Photo/Video</p>
@@ -308,7 +306,7 @@ export const CreatePost = () => {
 
         <div className="flex items-center">
           <div className="w-7 h-7">
-            <Image src="../../../../public/images/smile.png" alt="#" />
+            <Image src="/images/smile.png" alt="#" />
           </div>
           <p className="pl-2 text-[14px]">Feeling/Activity</p>
         </div>

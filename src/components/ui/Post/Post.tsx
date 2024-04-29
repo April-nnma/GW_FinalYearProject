@@ -91,7 +91,7 @@ export const Post = () => {
               </div>
               <div className="flex">
                 <Image
-                  src="../../../../public/images/dots.png"
+                  src="/images/dots.png"
                   alt="#"
                   className="w-9 h-10"
                 />
@@ -112,10 +112,10 @@ export const Post = () => {
             <div className="flex justify-between text-[#8e8d8d] mt-3 ml-4">
               <div className="flex items-center ">
                 <div className=" w-[1.1rem] h-[1.1rem]">
-                  <Image src="../../../../public/images/like.png" />
+                  <Image src="/images/like.png" />
                 </div>
                 <div className="ml-[2px] w-5 h-5">
-                  <Image src="../../../../public/images/heart.png" />
+                  <Image src="/images/heart.png" />
                 </div>
                 <p className="pl-2 whitespace-nowrap text-[15px] sm:text-[16px]">
                   {postLikes[post.post_id] ? (
@@ -143,7 +143,7 @@ export const Post = () => {
               </div>
               <div className="flex items-center">
                 <Image
-                  src="../../../../public/images/share.png"
+                  src="/images/share.png"
                   alt="Share"
                   className="w-6 h-6"
                 />
