@@ -57,11 +57,6 @@ export const IntroProfile = () => {
             <FaClock />
             <p>Joined March 2016</p>
           </div>
-
-          <div className="flex items-center space-x-2">
-            <LuInstagram />
-            <p className="text-blue-700 font-semibold">{user.fullname}</p>
-          </div>
           <div className="flex items-center space-x-2">
             <FaBirthdayCake />
             <a
@@ -72,6 +67,11 @@ export const IntroProfile = () => {
               {formatDate(user?.date_of_birth)}
             </a>
           </div>
+          <div className="flex items-center space-x-2">
+            <LuInstagram />
+            <p className="text-blue-700 font-semibold">{user.fullname}</p>
+          </div>
+
           <div className="flex items-center space-x-2">
             <FaSpotify />
             <a
