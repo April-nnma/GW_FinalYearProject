@@ -40,38 +40,6 @@ export class AuthService {
     }
   }
 
-  // async register(registerUserDto: registerDto): Promise<response> {
-  //   try {
-  //     const { email, password, fullname, date_of_birth } = registerUserDto;
-  //     const checkUser = await this.prismaService.user.findFirst({
-  //       where: { email: email },
-  //     });
-  //     console.log(ResponseCode.failed('email is exist'));
-  //     if (checkUser) return ResponseCode.failed('email is not exist');
-
-  //     const saltOrRounds = 10;
-  //     const hashPass = await bcrypt.hash(password, saltOrRounds);
-
-  //     const userCreate = await this.prismaService.user
-  //       .create({
-  //         data: {
-  //           fullname: fullname,
-  //           email,
-  //           password: hashPass,
-  //           date_of_birth: date_of_birth,
-  //         },
-  //       })
-  //       .then(async (result) => {
-  //         return result;
-  //       });
-  //     if (!userCreate) return ResponseCode.failed();
-  //     return ResponseCode.success({
-  //       token: await this.jwtService.signAsync(userCreate),
-  //     });
-  //   } catch (err) {
-  //     throw new BadRequestException();
-  //   }
-  // }
   async register(registerUserDto: registerDto): Promise<response> {
     try {
       const {
@@ -92,10 +60,8 @@ export class AuthService {
         throw new BadRequestException('Email already exists');
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Create the user
       const newUser = await this.prismaService.user.create({
         data: {
           fullname,
