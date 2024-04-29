@@ -138,7 +138,7 @@ export const CreateStory = () => {
                     <Input type="file" className="hidden absolute" />
                     <Image
                       className=""
-                      src="../../../../public/images/picture.png"
+                      src="/images/picture.png"
                       alt="#"
                       onClick={() =>
                         document.getElementById("file-input").click()
