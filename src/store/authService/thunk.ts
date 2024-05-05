@@ -20,20 +20,42 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
+// export const getUserByTokenThunk = createAsyncThunk(
+//   "userService/getUserByToken",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       // Lấy token dưới localStorage
+//       const token = getToken();
+//       console.log(token);
+//       // Nếu user đã đăng nhập => có token
+//       if (!token) return;
+//       const data = await userService.getUserByToken({
+//         token: token,
+//       });
+//       return data.data;
+//     } catch (err) {
+//       return rejectWithValue(err);
+//     }
+//   }
+// );
 export const getUserByTokenThunk = createAsyncThunk(
-  "authService/getUserByToken",
+  "userService/getUserByToken",
   async (_, { rejectWithValue }) => {
     try {
       // Lấy token dưới localStorage
       const token = getToken();
-      console.log(token)
-      // Nếu user đã đăng nhập => có token
-      if (!token) return;
-      const data = await userService.getUserByToken({
-        token : token
-      });
-      return data.data.content;
+      console.log("Token:", token);
+      if (!token) {
+        throw new Error("No token found"); 
+      }
+      const response = await userService.getUserByToken({ token });
+      if (response.data && response.data.content) {
+        return response.data.content;
+      } else {
+        throw new Error("Invalid user data structure");
+      }
     } catch (err) {
+      console.error("Error fetching user by token:", err);
       return rejectWithValue(err);
     }
   }

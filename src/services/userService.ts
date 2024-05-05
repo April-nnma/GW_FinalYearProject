@@ -7,6 +7,6 @@ const api = apiInstance({
 export const userService = {
   getUser: () => api.get<ApiResponse<UserLogin[]>>("/getUser"),
   getUserByToken: (data: { token: string }) => {
-    return api.post<{ data: UserLogin }>("/getInfo", data);
+    return api.post<ApiResponse<UserLogin>>("/getInfo", data);
   },
 };

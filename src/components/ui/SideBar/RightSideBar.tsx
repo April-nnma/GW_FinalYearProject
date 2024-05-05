@@ -16,9 +16,9 @@ export const RightSideBar = () => {
       try {
         const response = await userService.getUser();
         if (response.data && response.data.content) {
-          setUsers(response.data.content);
+          setUsers(response.data.content); // Assuming data is nested as { data: { content: [] } }
         } else {
-          setError("No user data found");
+          throw new Error("No user data found"); // Use throw to handle no data found
         }
       } catch (error) {
         setError("Failed to fetch users");
@@ -69,7 +69,6 @@ export const RightSideBar = () => {
             </div>
           </li>
         </ul>
-
       </div>
       <div>
         <div className="flex items-center justify-between text-gray-600">
