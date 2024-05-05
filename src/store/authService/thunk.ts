@@ -38,15 +38,35 @@ export const loginThunk = createAsyncThunk(
 //     }
 //   }
 // );
+// export const getUserByTokenThunk = createAsyncThunk(
+//   "userService/getUserByToken",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       // Lấy token dưới localStorage
+//       const token = getToken();
+//       console.log("Token:", token);
+//       if (!token) {
+//         throw new Error("No token found");
+//       }
+//       const response = await userService.getUserByToken({ token });
+//       if (response.data && response.data.content) {
+//         return response.data.content;
+//       } else {
+//         throw new Error("Invalid user data structure");
+//       }
+//     } catch (err) {
+//       console.error("Error fetching user by token:", err);
+//       return rejectWithValue(err);
+//     }
+//   }
+// );
 export const getUserByTokenThunk = createAsyncThunk(
   "userService/getUserByToken",
   async (_, { rejectWithValue }) => {
     try {
-      // Lấy token dưới localStorage
       const token = getToken();
-      console.log("Token:", token);
       if (!token) {
-        throw new Error("No token found"); 
+        throw new Error("No token found"); // Throwing an error here
       }
       const response = await userService.getUserByToken({ token });
       if (response.data && response.data.content) {
@@ -55,8 +75,11 @@ export const getUserByTokenThunk = createAsyncThunk(
         throw new Error("Invalid user data structure");
       }
     } catch (err) {
+      // Returning a simple serializable object or string instead of an Error object
       console.error("Error fetching user by token:", err);
-      return rejectWithValue(err);
+      return rejectWithValue({
+        message: err.message || "An unknown error occurred",
+      });
     }
   }
 );
