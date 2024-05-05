@@ -22,7 +22,6 @@ export const Story = () => {
   const { storiesList, isFetchingStories } = useSelector(
     (state: RootState) => state.storyService
   );
-
   useEffect(() => {
     dispatch(getStoriesThunk());
   }, [dispatch]);
@@ -42,6 +41,7 @@ export const Story = () => {
       <div className="text-center justify-center ml-80 mt-10">Loading...</div>
     );
   }
+
   const handleDeleteStory = async (storyId: number) => {
     try {
       const story = storiesList.find((story) => story.story_id === storyId);

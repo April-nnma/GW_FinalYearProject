@@ -1,6 +1,40 @@
 import { Avatar } from "@chakra-ui/avatar";
+import { useAuth } from "hooks";
+import { useEffect, useState } from "react";
+import { userService } from "services";
+import { UserLogin } from "types";
 
 export const RightSideBar = () => {
+  const [users, setUsers] = useState<UserLogin[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await userService.getUser();
+        if (response.data && response.data.content) {
+          setUsers(response.data.content);
+        } else {
+          setError("No user data found");
+        }
+      } catch (error) {
+        setError("Failed to fetch users");
+        console.error("Failed to fetch users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadUsers();
+  }, []);
+  console.log("users: ", users);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div className="w-[20rem] h-auto py-3 pr-2">
       <div className="w-full text-gray-600 border-b-2 pb-2 mb-2 border-gray-300">
@@ -10,7 +44,7 @@ export const RightSideBar = () => {
             <img
               className="w-8 h-8 rounded-full"
               src="https://static.xx.fbcdn.net/rsrc.php/v3/yR/r/tInzwsw2pVX.png"
-              alt="user"
+              alt="#"
             />
           </div>
           <div>
@@ -35,6 +69,7 @@ export const RightSideBar = () => {
             </div>
           </li>
         </ul>
+
       </div>
       <div>
         <div className="flex items-center justify-between text-gray-600">
@@ -55,21 +90,19 @@ export const RightSideBar = () => {
         </div>
         <div className="-ml-2">
           <ul className="w-full text-gray-600">
-            {Array(6)
-              .fill(0)
-              .map((_, idx) => (
-                <li
-                  key={idx}
-                  className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200"
-                >
-                  <div>
-                    <Avatar size="sm" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold">username</p>
-                  </div>
-                </li>
-              ))}
+            {users.map((user) => (
+              <li
+                key={user.user_id}
+                className="h-12 mb-2 flex items-center cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200"
+              >
+                <div>
+                  <Avatar size="sm" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold">{user.fullname}</p>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

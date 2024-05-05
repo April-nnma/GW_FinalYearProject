@@ -3,7 +3,7 @@ import { LoginSchemaType, RegisterSchemaType } from "schema";
 import { UserLogin } from "types";
 
 const api = apiInstance({
-  baseURL: import.meta.env.VITE_USER_SERVICES_API,
+  baseURL: import.meta.env.VITE_AUTH_SERVICES_API,
 });
 
 export const authService = {
@@ -12,5 +12,4 @@ export const authService = {
   login: (data: LoginSchemaType) =>
     api.post<ApiResponse<UserLogin>>("/login", data),
 
-  //getUserByToken: () => api.get<ApiResponse<UserLogin>>("/Info"),
 };

@@ -2,7 +2,7 @@ import { BiWorld } from "react-icons/bi";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { Divider, Image, Card } from "@chakra-ui/react";
+import { Divider, Image, Card, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { postService } from "services";
 import { CreatePost } from "types";
@@ -41,7 +41,17 @@ export const Post = () => {
   }, [dispatch]);
 
   if (isFetchingPosts) {
-    return <div className="text-center">Loading...</div>;
+    return (
+      <div className="text-center mt-10">
+        <Spinner
+          thickness="4px"
+          // speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </div>
+    );
   }
   if (!postsList || postsList.length === 0) {
     return <div className="tex-center">No posts to display</div>;

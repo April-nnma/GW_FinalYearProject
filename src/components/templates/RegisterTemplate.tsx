@@ -4,9 +4,10 @@ import { authService } from "services";
 import { RegisterSchema, RegisterSchemaType } from "schema";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { PATH } from "constant";
-import { handleError } from "utils";
-import { Button, Center } from "@chakra-ui/react";
+import { handleError, sleep } from "utils";
+import { Button, Center, Input } from "@chakra-ui/react";
 
 export const RegisterTemplate = () => {
   return (
@@ -66,24 +67,21 @@ const FormRegister = () => {
     mode: "onChange",
     resolver: zodResolver(RegisterSchema),
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<RegisterSchemaType> = async (data) => {
     try {
+      setIsLoading(true);
       await authService.register(data);
+      await sleep();
       toast.success("Register successfully");
       //redirect về page login
       navigate(PATH.login);
     } catch (error) {
       handleError(error, "Email already exists");
-      // console.log(error);
-      // if (error.response && error.response.status === 400) {
-      //   toast.error("Email already exists");
-      // } else {
-      //   // toast.error(error?.response?.data?.content || "An error occurred");
-      //   handleError(error);
-      // }
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -96,7 +94,7 @@ const FormRegister = () => {
           >
             Full Name
           </label>
-          <input
+          <Input
             {...register("fullName")}
             type="text"
             placeholder="Full Name"
@@ -108,14 +106,6 @@ const FormRegister = () => {
             </p>
           )}
         </div>
-        {/* <Input
-          label="Full Name"
-          placeholder="Full Name"
-          id="fullName"
-          name="fullName"
-          errors={errors?.fullName.message}
-          register={register}
-        /> */}
       </div>
 
       <div className="mt-6">
@@ -125,7 +115,7 @@ const FormRegister = () => {
         >
           Email Address
         </label>
-        <input
+        <Input
           {...register("email")}
           type="email"
           placeholder="Email"
@@ -144,7 +134,7 @@ const FormRegister = () => {
           Password
         </label>
 
-        <input
+        <Input
           {...register("password")}
           type="password"
           placeholder="Your Password"
@@ -161,7 +151,7 @@ const FormRegister = () => {
         >
           Date of Birth
         </label>
-        <input
+        <Input
           {...register("dateOfBirth")}
           type="date"
           placeholder="Date of Birth"
@@ -173,14 +163,13 @@ const FormRegister = () => {
           </p>
         )}
       </div>
-      {/* <button
-        type="submit"
-        className=" mt-7 w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-green-500 rounded-lg hover:bg-green-400 focus:outline-none focus:bg-green-400 focus:ring focus:ring-green-300 focus:ring-opacity-50"
-      >
-        Create New Account
-      </button> */}
       <Center>
-        <Button type="submit" colorScheme="whatsapp" className="mt-7 !w-full">
+        <Button
+          type="submit"
+          colorScheme="whatsapp"
+          isLoading={isLoading}
+          className="mt-7 !w-full"
+        >
           Create New Account
         </Button>
       </Center>

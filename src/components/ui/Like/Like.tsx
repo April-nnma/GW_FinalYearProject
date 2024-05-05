@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiLike } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { likeService } from "services";

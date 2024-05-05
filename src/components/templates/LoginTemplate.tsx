@@ -8,7 +8,7 @@ import { handleError } from "utils";
 import { RootState, useAppDispatch } from "store";
 import { loginThunk } from "store/authService";
 import { useSelector } from "react-redux";
-import { Button } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 
 export const LoginTemplate = () => {
   return (
@@ -98,7 +98,7 @@ const FormLogin = () => {
         >
           Email Address
         </label>
-        <input
+        <Input
           type="email"
           name="email"
           {...register("email")}
@@ -120,7 +120,7 @@ const FormLogin = () => {
           </label>
         </div>
         <div className="relative">
-          <input
+          <Input
             type="password"
             name="password"
             {...register("password")}
