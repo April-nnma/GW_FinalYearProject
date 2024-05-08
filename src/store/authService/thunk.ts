@@ -4,7 +4,7 @@ import { LoginSchemaType } from "schema";
 import { authService, userService } from "services";
 import { getToken, sleep } from "utils";
 
-//payload chính là 1 cái rep trả về từ server
+//payload chính là 1 cái response trả về từ server
 export const loginThunk = createAsyncThunk(
   "authService/login",
   async (payload: LoginSchemaType, { rejectWithValue }) => {
@@ -20,53 +20,15 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
-// export const getUserByTokenThunk = createAsyncThunk(
-//   "userService/getUserByToken",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       // Lấy token dưới localStorage
-//       const token = getToken();
-//       console.log(token);
-//       // Nếu user đã đăng nhập => có token
-//       if (!token) return;
-//       const data = await userService.getUserByToken({
-//         token: token,
-//       });
-//       return data.data;
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
-// export const getUserByTokenThunk = createAsyncThunk(
-//   "userService/getUserByToken",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       // Lấy token dưới localStorage
-//       const token = getToken();
-//       console.log("Token:", token);
-//       if (!token) {
-//         throw new Error("No token found");
-//       }
-//       const response = await userService.getUserByToken({ token });
-//       if (response.data && response.data.content) {
-//         return response.data.content;
-//       } else {
-//         throw new Error("Invalid user data structure");
-//       }
-//     } catch (err) {
-//       console.error("Error fetching user by token:", err);
-//       return rejectWithValue(err);
-//     }
-//   }
-// );
 export const getUserByTokenThunk = createAsyncThunk(
   "userService/getUserByToken",
   async (_, { rejectWithValue }) => {
     try {
       const token = getToken();
+      console.log("token:", token);
       if (!token) {
-        throw new Error("No token found"); // Throwing an error here
+        console.error("No token found in storage.");
+        throw new Error("No token found");
       }
       const response = await userService.getUserByToken({ token });
       if (response.data && response.data.content) {
@@ -75,7 +37,6 @@ export const getUserByTokenThunk = createAsyncThunk(
         throw new Error("Invalid user data structure");
       }
     } catch (err) {
-      // Returning a simple serializable object or string instead of an Error object
       console.error("Error fetching user by token:", err);
       return rejectWithValue({
         message: err.message || "An unknown error occurred",

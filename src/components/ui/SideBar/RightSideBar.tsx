@@ -1,5 +1,4 @@
 import { Avatar } from "@chakra-ui/avatar";
-import { useAuth } from "hooks";
 import { useEffect, useState } from "react";
 import { userService } from "services";
 import { UserLogin } from "types";
@@ -16,9 +15,9 @@ export const RightSideBar = () => {
       try {
         const response = await userService.getUser();
         if (response.data && response.data.content) {
-          setUsers(response.data.content); // Assuming data is nested as { data: { content: [] } }
+          setUsers(response.data.content); 
         } else {
-          throw new Error("No user data found"); // Use throw to handle no data found
+          throw new Error("No user data found");
         }
       } catch (error) {
         setError("Failed to fetch users");

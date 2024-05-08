@@ -150,24 +150,6 @@ export const Header = () => {
 
         {/* Right */}
         <div className="flex space-x-5 items-center ml-4">
-          {!token && (
-            <p className="flex items-center font-semibold">
-              <FaUser />
-              <span
-                className="ml-2 cursor-pointer hover:text-primary"
-                onClick={() => navigate(PATH.login)}
-              >
-                Login
-              </span>
-              <span className="inline-block h-6 w-px bg-black mx-2"></span>
-              <span
-                className="cursor-pointer hover:text-primary"
-                onClick={() => navigate(PATH.register)}
-              >
-                Register
-              </span>
-            </p>
-          )}
           <div className="col-span-2 flex items-center justify-end">
             <div className="h-10 w-auto flex items-center space-x-3 pr-2 ">
               <Popover>

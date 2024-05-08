@@ -1,7 +1,7 @@
 import { Button, Divider, Image } from "@chakra-ui/react";
 import { useAuth } from "hooks";
-import { FaCamera, FaPen, FaPlus } from "react-icons/fa6";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { FaCamera, FaCameraRetro, FaPen, FaPlus } from "react-icons/fa6";
+import { MdCameraEnhance, MdKeyboardArrowDown } from "react-icons/md";
 import { TiArrowSortedDown } from "react-icons/ti";
 
 export const InfoProfile = () => {
@@ -28,13 +28,14 @@ export const InfoProfile = () => {
             className="absolute w-full flex items-center ml-10"
             style={{ bottom: "-120px" }}
           >
-            <div className="w-44 h-44 rounded-full bg-gray-300 border-4 border-white">
+            <div className="w-44 h-44 rounded-full bg-gray-300 border-4 border-white relative">
               <Image
                 className="w-full h-full rounded-full"
                 src="https://random.imagecdn.app/250/250"
                 alt="#"
               />
             </div>
+
             <div
               className="absolute flex items-center "
               style={{ bottom: 30, right: 30 }}
