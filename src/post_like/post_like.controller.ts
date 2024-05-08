@@ -1,7 +1,7 @@
 import { Controller, Post, Delete, Param, HttpCode, Get } from '@nestjs/common';
 import { PostLikeService } from './post_like.service';
-import { PostLike } from './post_like.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { PostLike } from './entities/post_like.entity';
 @ApiBearerAuth()
 @ApiTags('Like')
 @Controller('post-like')

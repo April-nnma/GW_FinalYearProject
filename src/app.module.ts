@@ -6,14 +6,13 @@ import { PrismaService } from './config/prisma/prisma.service';
 import { PostModule } from './post/post.module';
 import { PostLikeModule } from './post_like/post_like.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostLike } from './post_like/post_like.entity';
 import { CommentModule } from './comment/comment.module';
-import { Comment } from './comment/comment.entity';
 import { StoryModule } from './story/story.module';
+import { Comment } from './comment/entities/comment.entity';
+import { PostLike } from './post_like/entities/post_like.entity';
 
 @Module({
   imports: [
-    
     ConfigModule.forRoot(),
     AuthModule,
     UserModule,
@@ -22,12 +21,20 @@ import { StoryModule } from './story/story.module';
     CommentModule,
     StoryModule,
     TypeOrmModule.forRoot({
+      // type: 'mysql',
+      // host: 'mysql-1d631f1c-gokuhieu-72d6.d.aivencloud.com',
+      // port: 19401,
+      // username: 'avnadmin',
+      // password: 'AVNS_BCWGX9GoMZoZvLM2K1Y',
+      // database: 'defaultdb',
+      // entities: [PostLike, Comment],
+      // synchronize: true,
       type: 'mysql',
-      host: 'mysql-1d631f1c-gokuhieu-72d6.d.aivencloud.com',
-      port: 19401,
-      username: 'avnadmin',
-      password: 'AVNS_BCWGX9GoMZoZvLM2K1Y',
-      database: 'defaultdb',
+      host: '127.0.0.1',
+      port: 3306,
+      username: 'root',
+      password: '123456',
+      database: 'gwfinal',
       entities: [PostLike, Comment],
       synchronize: true,
     }),

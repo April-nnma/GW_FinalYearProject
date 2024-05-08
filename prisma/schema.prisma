@@ -8,14 +8,13 @@ datasource db {
 }
 
 model user {
-  user_id       Int         @id @default(autoincrement())
-  fullname      String?     @db.VarChar(255)
-  email         String?     @db.VarChar(255)
-  date_of_birth DateTime?   @db.Date
-  password      String?     @db.VarChar(255)
+  user_id       Int       @id @default(autoincrement())
+  fullname      String?   @db.VarChar(255)
+  email         String?   @db.VarChar(255)
+  date_of_birth DateTime? @db.Date
+  password      String?   @db.VarChar(255)
   comment       comment[]
   post          post[]
-  post_like     post_like[]
   story         story[]
 }
 
@@ -33,29 +32,23 @@ model comment {
 }
 
 model post {
-  post_id         Int         @id @default(autoincrement())
+  post_id         Int       @id @default(autoincrement())
   user_id_create  Int
-  created_at      DateTime    @db.Date
-  caption         String      @db.VarChar(255)
-  content         String?     @db.LongText
-  fullname_create String?     @db.VarChar(255)
+  content         String?   @db.LongText
+  created_at      DateTime? @db.Date
+  caption         String    @db.VarChar(255)
+  fullname_create String?   @db.VarChar(255)
   comment         comment[]
-  user            user        @relation(fields: [user_id_create], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
-  post_like       post_like[]
+  user            user      @relation(fields: [user_id_create], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
 
-  @@index([user_id_create], map: "fk_user_id")
+  @@index([user_id_create], map: "user_id_create")
 }
 
 model post_like {
-  like_id   Int       @id @default(autoincrement())
+  like_id   Int      @id @default(autoincrement())
   user_id   Int
   post_id   Int
-  like_date DateTime? @default(now()) @db.Timestamp(0)
-  post      post      @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction, map: "post_like_ibfk_1")
-  user      user      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "post_like_ibfk_2")
-
-  @@unique([post_id, user_id], map: "unique_like")
-  @@index([user_id], map: "user_id")
+  like_date DateTime @default(now()) @db.DateTime(0)
 }
 
 model story {
