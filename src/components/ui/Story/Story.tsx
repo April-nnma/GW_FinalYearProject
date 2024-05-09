@@ -38,7 +38,9 @@ export const Story = () => {
 
   if (isFetchingStories) {
     return (
-      <div className="text-center justify-center ml-80 mt-10">Loading...</div>
+      <div className="text-center justify-center ml-[234px] mt-20">
+        <Spinner size="md" />
+      </div>
     );
   }
 

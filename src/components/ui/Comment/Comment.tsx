@@ -10,6 +10,7 @@ import { FaPen } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import { commentService } from "services";
 import { sleep } from "utils";
+import { useLoading } from "hooks";
 
 interface PostComment {
   comment_id: number;
@@ -33,10 +34,10 @@ export const Comment = ({
 }: CommentProps) => {
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editedMessage, setEditedMessage] = useState("");
   const toast = useToast();
+  const { isLoading, startLoading, stopLoading } = useLoading();
 
   useEffect(() => {
     loadComments();
@@ -62,7 +63,7 @@ export const Comment = ({
 
   const handleCommentPost = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
+    startLoading();
     try {
       await sleep();
       await commentService.createComment(postId, userId, {
@@ -92,7 +93,7 @@ export const Comment = ({
         position: "top",
       });
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
   };
 
@@ -108,7 +109,7 @@ export const Comment = ({
       });
       return;
     }
-    setIsLoading(true);
+    startLoading();
     try {
       await commentService.updateComment(commentId, { message: editedMessage });
       setEditingCommentId(null);
@@ -133,12 +134,12 @@ export const Comment = ({
         position: "top",
       });
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
   };
 
   const handleDeleteComment = async (commentId: number) => {
-    setIsLoading(true);
+    startLoading();
     try {
       await commentService.deleteComment(commentId);
       toast({
@@ -161,7 +162,7 @@ export const Comment = ({
         position: "top",
       });
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
   };
 
