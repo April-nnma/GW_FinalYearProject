@@ -18,10 +18,10 @@ export const Story = () => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
   const [stories, setStories] = useState<CreateStory[]>([]);
-
   const { storiesList, isFetchingStories } = useSelector(
     (state: RootState) => state.storyService
   );
+
   useEffect(() => {
     dispatch(getStoriesThunk());
   }, [dispatch]);
@@ -114,11 +114,13 @@ export const Story = () => {
                       {story.fullname_story}
                     </p>
                     <div className="absolute top-0 right-0 p-1 rounded-full cursor-pointer">
-                      <FaXmark
-                        onClick={() => {
-                          handleDeleteStory(story.story_id);
-                        }}
-                      />
+                      {story.user_id_story == user.user_id && (
+                        <FaXmark
+                          onClick={() => {
+                            handleDeleteStory(story.story_id);
+                          }}
+                        />
+                      )}
                     </div>
                   </Box>
                 </Box>

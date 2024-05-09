@@ -14,7 +14,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAuth } from "hooks";
+import { useAuth, useLoading } from "hooks";
 import { useState, useEffect, useRef } from "react";
 import { BiWorld } from "react-icons/bi";
 import { toast } from "react-toastify";
@@ -31,7 +31,7 @@ export const CreatePost = () => {
   const finalRef = useRef(null);
   const [imgs, setImgs] = useState<ImageFile[]>([]);
   const [caption, setCaption] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, startLoading, stopLoading } = useLoading();
 
   const handlePreviewImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -49,34 +49,11 @@ export const CreatePost = () => {
     return () => imgs.forEach((img) => URL.revokeObjectURL(img.preview));
   }, [imgs]);
 
-  const handleClick = () => {
-    const fileInput = document.querySelector("#getFile") as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
-  };
-  const isImageSizeValid = (file: File) => {
-    const minSize = 10;
-    const maxSize = 10 * 1024 * 1024;
-
-    return file.size >= minSize && file.size <= maxSize;
-  };
-
   const handlePost = async (event) => {
     try {
-      setIsLoading(true);
+      startLoading();
       event.preventDefault();
       if (user) {
-        if (imgs.length > 0) {
-          const isSizeValid = imgs.every(isImageSizeValid);
-          if (!isSizeValid) {
-            toast.error(
-              "Image size is too large. Please choose another image."
-            );
-            return;
-          }
-        }
-
         const formData = new FormData();
         formData.append("user_id_create", user.user_id.toString());
 
@@ -101,7 +78,7 @@ export const CreatePost = () => {
     } catch (error) {
       console.error("Error while posting:", error);
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
   };
 
@@ -236,10 +213,7 @@ export const CreatePost = () => {
                   <div className="ml-auto flex mr-3">
                     <div className="flex items-center mr-3">
                       <div className="w-7 h-7">
-                        <Image
-                          src="/images/camera.png"
-                          alt="#"
-                        />
+                        <Image src="/images/camera.png" alt="#" />
                       </div>
                     </div>
                     <div className="flex items-center mr-3">
@@ -257,10 +231,7 @@ export const CreatePost = () => {
 
                     <div className="flex items-center mr-2">
                       <div className="w-7 h-7">
-                        <Image
-                          src="/images/smile.png"
-                          alt="#"
-                        />
+                        <Image src="/images/smile.png" alt="#" />
                       </div>
                     </div>
                   </div>

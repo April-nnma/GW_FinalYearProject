@@ -54,7 +54,7 @@ export const Post = () => {
     );
   }
   if (!postsList || postsList.length === 0) {
-    return <div className="tex-center">No posts to display</div>;
+    return <div className="text-center">No posts to display</div>;
   }
 
   const handleDeletePost = async (postId: number) => {

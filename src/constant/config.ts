@@ -3,4 +3,5 @@ export const PATH = {
   register: "/register",
   home: "/home",
   account: "/account",
+  stories: "/stories/create",
 };
