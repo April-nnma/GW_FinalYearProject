@@ -55,7 +55,7 @@ export const Story = () => {
         console.log("Story deleted successfully!");
       } else {
         toast.error("Don't delete this story");
-        console.log("You are not authorized to delete this story.");
+        console.log("not the owner");
       }
     } catch (error) {
       console.error("Error deleting story:", error);
@@ -69,9 +69,8 @@ export const Story = () => {
           spaceBetween: 0,
         },
       }}
-      freeMode={true}
-      pagination={{ clickable: true }}
-      modules={[FreeMode, Navigation]}
+      navigation={true}
+      modules={[Navigation]}
       className="max-m-[90%] lg:max-w-[80%]"
     >
       {storiesList

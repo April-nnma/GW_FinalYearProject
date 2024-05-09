@@ -1,11 +1,14 @@
 import { Button, Divider, Image } from "@chakra-ui/react";
+import { PATH } from "constant";
 import { useAuth } from "hooks";
 import { FaCamera, FaCameraRetro, FaPen, FaPlus } from "react-icons/fa6";
 import { MdCameraEnhance, MdKeyboardArrowDown } from "react-icons/md";
 import { TiArrowSortedDown } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 export const InfoProfile = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   return (
     <div className="w-full h-auto shadow bg-white rounded-md">
       <div className="max-w-6xl h-full mx-auto bg-white p-2">
@@ -44,6 +47,7 @@ export const InfoProfile = () => {
                 <Button
                   colorScheme="messenger"
                   className="px-3 py-1.5 rounded-md0 text-white font-semibold focus:outline-none"
+                  onClick={() => navigate(PATH.stories)}
                 >
                   <FaPlus className="mr-2" />
                   Add to Story

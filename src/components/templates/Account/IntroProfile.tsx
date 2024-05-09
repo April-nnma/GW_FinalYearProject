@@ -7,11 +7,13 @@ import {
   FaSpotify,
 } from "react-icons/fa6";
 import { IoIosSchool, IoLogoRss } from "react-icons/io";
+import { HiOutlineMail } from "react-icons/hi";
 import { IoHome } from "react-icons/io5";
 import { LuInstagram } from "react-icons/lu";
 import { useAuth } from "hooks";
 import { FaBirthdayCake } from "react-icons/fa";
 import { formatDate } from "utils";
+import { StoriesList } from "./StoriesList";
 
 export const IntroProfile = () => {
   const { user } = useAuth();
@@ -54,15 +56,15 @@ export const IntroProfile = () => {
             <p className="font-semibold">229 people</p>
           </div>
           <div className="flex items-center space-x-2">
-            <FaClock />
-            <p>Joined March 2016</p>
+            <HiOutlineMail />
+            <p className="font-semibold">{user?.email}</p>
           </div>
           <div className="flex items-center space-x-2">
             <FaBirthdayCake />
             <a
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-700 font-semibold"
+              className=" font-semibold"
             >
               {formatDate(user?.date_of_birth)}
             </a>
@@ -94,13 +96,20 @@ export const IntroProfile = () => {
               April-nnma
             </a>
           </div>
-
+          <div className="flex items-center space-x-2">
+            <FaClock />
+            <p>Joined March 2016</p>
+          </div>
           <div className="flex items-center space-x-2">
             <FaHeart />
             <p>Single</p>
           </div>
           <Button colorScheme="gray">Edit details</Button>
         </div>
+        <StoriesList />
+        <Button colorScheme="gray" className="w-full mt-0">
+          Edit featured
+        </Button>
       </div>
     </div>
   );
