@@ -15,6 +15,7 @@ model user {
   password      String?   @db.VarChar(255)
   comment       comment[]
   post          post[]
+  saved         saved[]
   story         story[]
 }
 
@@ -40,6 +41,7 @@ model post {
   fullname_create String?   @db.VarChar(255)
   comment         comment[]
   user            user      @relation(fields: [user_id_create], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+  saved           saved[]
 
   @@index([user_id_create], map: "user_id_create")
 }
@@ -60,4 +62,16 @@ model story {
   user           user     @relation(fields: [user_id_story], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id_story")
 
   @@index([user_id_story], map: "fk_user_id_story")
+}
+
+model saved {
+  saved_id   Int       @id @default(autoincrement())
+  user_id    Int
+  post_id    Int
+  saved_date DateTime? @default(now()) @db.Timestamp(0)
+  user       user      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "saved_ibfk_1")
+  post       post      @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction, map: "saved_ibfk_2")
+
+  @@unique([user_id, post_id], map: "unique_saved")
+  @@index([post_id], map: "post_id")
 }
