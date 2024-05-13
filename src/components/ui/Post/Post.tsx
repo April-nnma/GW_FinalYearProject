@@ -11,8 +11,8 @@ import { RootState, useAppDispatch } from "store";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { HiXMark } from "react-icons/hi2";
-import { Like } from "../Like/Like";
-import { Comment } from "../Comment/Comment";
+import { Like } from "../Like";
+import { Comment } from "../Comment";
 import { formatDate } from "utils";
 
 export const Post = () => {

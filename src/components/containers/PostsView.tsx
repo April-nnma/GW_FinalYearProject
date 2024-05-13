@@ -11,7 +11,7 @@ import { getPostsThunk, postServiceActions } from "store/postService";
 import { RootState, useAppDispatch } from "store";
 import { HiXMark } from "react-icons/hi2";
 import { Like } from "../ui/Like";
-import { Comment } from "../ui/Comment/Comment";
+import { Comment } from "../ui/Comment";
 import { formatDate } from "utils";
 
 interface PostsViewProps {

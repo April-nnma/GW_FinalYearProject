@@ -13,7 +13,7 @@ import { LuInstagram } from "react-icons/lu";
 import { useAuth } from "hooks";
 import { FaBirthdayCake } from "react-icons/fa";
 import { formatDate } from "utils";
-import { StoriesList } from "./StoriesList";
+import { StoriesView } from "../../containers";
 
 export const IntroProfile = () => {
   const { user } = useAuth();
@@ -106,7 +106,7 @@ export const IntroProfile = () => {
           </div>
           <Button colorScheme="gray">Edit details</Button>
         </div>
-        <StoriesList />
+        <StoriesView />
         <Button colorScheme="gray" className="w-full mt-0">
           Edit featured
         </Button>

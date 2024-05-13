@@ -1,8 +1,7 @@
 import { FaBell } from "react-icons/fa";
 import { useAuth } from "hooks";
 import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
-import { Popover } from "@chakra-ui/react";
-import { Image } from "@chakra-ui/react";
+import { Popover, Image } from "@chakra-ui/react";
 import {
   PopoverArrow,
   PopoverContent,

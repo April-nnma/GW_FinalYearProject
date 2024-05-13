@@ -1,5 +1,4 @@
-import { Feed } from "../ui/Feed";
-
+import { Feed } from "../ui";
 export const HomeTemplate = () => {
   return (
     <div>

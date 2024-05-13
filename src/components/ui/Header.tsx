@@ -1,9 +1,9 @@
-import { FaBell, FaFacebookMessenger, FaStore, FaUser } from "react-icons/fa";
+import { FaBell, FaFacebookMessenger, FaStore } from "react-icons/fa";
 import { GrGroup } from "react-icons/gr";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
 import { MdHome, MdOutlineOndemandVideo } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { useAuth } from "hooks";
 import { Avatar, AvatarBadge } from "@chakra-ui/avatar";
 import { Popover } from "@chakra-ui/react";
@@ -15,13 +15,11 @@ import {
   PopoverTrigger,
 } from "@chakra-ui/react";
 import { useAppDispatch } from "store";
-import { PATH } from "constant";
 import { authServiceActions } from "store/authService";
 
 export const Header = () => {
-  const navigate = useNavigate();
 
-  const { token, user } = useAuth();
+  const { user } = useAuth();
   console.log(user);
 
   const dispatch = useAppDispatch();

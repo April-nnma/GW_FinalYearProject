@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import { useAuth } from "hooks";
 import { RootState } from "store";
 
-export const StoriesList = () => {
+export const StoriesView = () => {
   const { user } = useAuth();
   const { storiesList, isFetchingStories } = useSelector(
     (state: RootState) => state.storyService

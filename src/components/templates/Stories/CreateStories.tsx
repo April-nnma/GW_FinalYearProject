@@ -1,4 +1,4 @@
-import { Avatar, Button, Image, Input, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Button, Image, Input} from "@chakra-ui/react";
 import { TbLetterA } from "react-icons/tb";
 import { useState, useRef } from "react";
 import { storyService } from "services";
