@@ -1,4 +1,4 @@
-import { apiInstance } from "constant/apiInstance";
+import { apiInstance } from "constant";
 import { CreatePost } from "types/PostService";
 
 const api = apiInstance({

@@ -1,7 +1,7 @@
 import { BiWorld } from "react-icons/bi";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
-import { FaRegCommentAlt } from "react-icons/fa";
+import { FaBookmark, FaRegCommentAlt } from "react-icons/fa";
 import { Divider, Image, Card, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { postService } from "services";
@@ -14,6 +14,7 @@ import { HiXMark } from "react-icons/hi2";
 import { Like } from "../Like";
 import { Comment } from "../Comment";
 import { formatDate } from "utils";
+import { Saved } from "../Save";
 
 export const Post = () => {
   const { user } = useAuth();
@@ -75,6 +76,7 @@ export const Post = () => {
     }
   };
   console.log(postsList);
+
   return (
     <>
       {postsList
@@ -96,14 +98,17 @@ export const Post = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex">
+              <div className="flex space-x-2">
                 <Image src="/images/dots.png" alt="#" className="w-9 h-10" />
-                <HiXMark
-                  className="mt-3 w-full h-full"
-                  onClick={() => {
-                    handleDeletePost(post.post_id);
-                  }}
-                />
+                <div className="mt-3 w-full h-full flex space-x-2">
+                  {/* <FaBookmark /> */}
+                  <Saved userId={user.user_id} postId={post.post_id} />
+                  <HiXMark
+                    onClick={() => {
+                      handleDeletePost(post.post_id);
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <div className="m-3">

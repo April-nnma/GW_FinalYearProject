@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import { PATH } from "constant";
-import { Login, Register, Home, Account, Stories } from "pages";
+import { Login, Register, Home, Account, Stories, Saved } from "pages";
 import { AuthLayout, MainLayout } from "../components";
 
 export const router: RouteObject[] = [
@@ -21,6 +21,11 @@ export const router: RouteObject[] = [
     path: PATH.stories,
     element: <Stories />,
   },
+  {
+    path: PATH.saved,
+    element: <Saved />,
+  },
+
   {
     element: <AuthLayout />,
     children: [

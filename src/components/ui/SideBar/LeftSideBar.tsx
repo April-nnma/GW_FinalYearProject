@@ -49,7 +49,12 @@ export const LeftSideBar = () => {
               alt="#"
               className="w-8 h-7 rounded-full mr-2"
             />
-            <div className="whitespace-nowrap font-semibold">Saved</div>
+            <div
+              className="whitespace-nowrap font-semibold"
+              onClick={() => navigate(PATH.saved)}
+            >
+              Saved
+            </div>
           </div>
         </li>
         <li className="h-12 mb-2 flex items-center justify-content cursor-pointer space-x-2 p-2 rounded-md hover:bg-gray-200">

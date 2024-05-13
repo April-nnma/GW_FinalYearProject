@@ -1,5 +1,5 @@
-import { apiInstance } from "constant/apiInstance";
-import { CreateStory } from "types/StoryService";
+import { apiInstance } from "constant";
+import { CreateStory } from "types";
 
 const api = apiInstance({
   baseURL: import.meta.env.VITE_STORY_SERVICES_API,

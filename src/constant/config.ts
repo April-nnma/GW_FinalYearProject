@@ -4,4 +4,5 @@ export const PATH = {
   home: "/home",
   account: "/account",
   stories: "/stories/create",
+  saved: "/saved",
 };
