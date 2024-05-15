@@ -15,15 +15,15 @@ export const router: RouteObject[] = [
         path: PATH.account,
         element: <Account />,
       },
+      {
+        path: PATH.saved,
+        element: <Saved />,
+      },
     ],
   },
   {
     path: PATH.stories,
     element: <Stories />,
-  },
-  {
-    path: PATH.saved,
-    element: <Saved />,
   },
 
   {

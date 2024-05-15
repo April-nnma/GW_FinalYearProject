@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { likeService } from "services/likeService";
 import { postService } from "services/postService";
 
 export const getPostsThunk = createAsyncThunk(

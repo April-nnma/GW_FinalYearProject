@@ -20,8 +20,6 @@ import { authServiceActions } from "store/authService";
 export const Header = () => {
 
   const { user } = useAuth();
-  console.log(user);
-
   const dispatch = useAppDispatch();
   const location = useLocation();
   const pathName = location?.pathname.split("/")[1];

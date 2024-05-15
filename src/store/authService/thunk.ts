@@ -25,7 +25,7 @@ export const getUserByTokenThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = getToken();
-      console.log("token:", token);
+      // console.log("token:", token);
       if (!token) {
         console.error("No token found in storage.");
         throw new Error("No token found");

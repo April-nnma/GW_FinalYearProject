@@ -10,8 +10,8 @@ export const store = configureStore({
 });
 //dispatch action khi client vào trang web
 store.dispatch(getUserByTokenThunk());
-store.dispatch(getPostsThunk);
-store.dispatch(getStoriesThunk);
+store.dispatch(getPostsThunk());
+store.dispatch(getStoriesThunk());
 type AppDispatch = (typeof store)["dispatch"];
 
 export const useAppDispatch: () => AppDispatch = useDispatch;

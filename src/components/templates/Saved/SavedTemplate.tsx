@@ -1,11 +1,9 @@
 import { SavedView } from "../../containers";
-import { Header } from "../../../components/ui";
 import { LeftSideSaved } from "./LeftSideSaved";
 
 export const SavedTemplate = () => {
   return (
     <div>
-      <Header />
       <div className="flex-grow flex overflow-auto">
         <div className="hidden md:flex md:w-1/4 flex-col">
           <LeftSideSaved />
