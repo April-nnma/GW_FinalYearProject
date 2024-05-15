@@ -1,7 +1,7 @@
 import { BiWorld } from "react-icons/bi";
 import { Avatar } from "@chakra-ui/avatar";
 import { useAuth } from "hooks";
-import { FaBookmark, FaRegCommentAlt } from "react-icons/fa";
+import { FaRegCommentAlt } from "react-icons/fa";
 import { Divider, Image, Card, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { postService } from "services";
@@ -18,7 +18,6 @@ import { Saved } from "../Save";
 
 export const Post = () => {
   const { user } = useAuth();
-  const [postLikes, setPostLikes] = useState<{ [postId: number]: boolean }>({});
   const [posts, setPosts] = useState<CreatePost[]>([]);
   const [numberOfComments, setNumberOfComments] = useState(0);
   const dispatch = useAppDispatch();
@@ -125,18 +124,6 @@ export const Post = () => {
                 <div className="ml-[2px] w-5 h-5">
                   <Image src="/images/heart.png" />
                 </div>
-                <p className="pl-2 whitespace-nowrap text-[15px] sm:text-[16px]">
-                  {postLikes[post.post_id] ? (
-                    <>
-                      {user.fullname} and{" "}
-                      <span>{`${
-                        Object.keys(postLikes).length - 1
-                      } others`}</span>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </p>
               </div>
               <p className="whitespace-nowrap text-[15px] sm:text-[16px]">
                 {numberOfComments} Comments

@@ -40,8 +40,7 @@ export const Saved = ({ userId, postId }: Post) => {
         );
         setIsSaved(saved);
       } catch (error) {
-        console.error("Failed to check if post is saved:", error);
-        toast.error("Failed to check save status.");
+        console.error("Fail", error);
       }
     };
 
