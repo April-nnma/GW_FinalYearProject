@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+  import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class CreateSavedDto {
-  @IsNotEmpty()
-  @IsNumber()
-  userId: number; 
+  export class CreateSavedDto {
+    @IsNotEmpty()
+    @IsNumber()
+    userId: number; 
 
-  @IsNotEmpty()
-  @IsNumber()
-  postId: number; 
-}
+    @IsNotEmpty()
+    @IsNumber()
+    postId: number; 
+  }

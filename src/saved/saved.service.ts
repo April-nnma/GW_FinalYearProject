@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import { CreateSavedDto } from './dto/saved.dto';
-import { Saved } from './entities/saved.entity';
 
 @Injectable()
 export class SavedService {
@@ -44,7 +43,7 @@ export class SavedService {
   async getSavedByPostId(postId: number) {
     const saved = await this.prisma.saved.findMany({
       where: { post_id: postId },
-      include: { user: true, post: true }, // assuming you want to include related user and post details
+      include: { user: true, post: true },
     });
 
     if (saved.length === 0) {
